@@ -12,4 +12,5 @@ struct FVector2 : Vector2
     
     //utility
     float Dot(const FVector2& other)const;
+
 };

@@ -18,7 +18,7 @@ set(OPENGL_VERSION "4.3" CACHE STRING "OpenGL version" FORCE)
  
 FetchContent_MakeAvailable(raylib)
 
-add_executable(${PROJECT_NAME} src/main.cpp src/utility/FVector2.cpp)
+add_executable(${PROJECT_NAME} src/main.cpp src/utility/FVector2.cpp src/core/Game.cpp)
 
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
