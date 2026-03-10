@@ -10,7 +10,10 @@ struct FVector2 : Vector2
         return FVector2(x + other.x, y + other.y);
     }
     
-    //utility
+    //======= Funzioni Utility ======= 
     float Dot(const FVector2& other)const;
+
+    static float SqrDistance(const FVector2& A, const FVector2& B);
+    static float Distance(const FVector2& A, const FVector2& B);
 
 };

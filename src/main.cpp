@@ -1,6 +1,4 @@
-#include "raylib.h"
-#include "utility/FVector2.h"
-#include "core/Game.h"
+#include "pong/PongGame.h"
 // FULL OBJECT ORIENTED
 // Classe Game -> da cui ereditiamo per fare le nostre classi game
 //      class Pong : public Game{};
@@ -24,8 +22,8 @@
 
 
 int main(){
-    Game g(FVector2{800,450}, "RLCPP");
-
+    PongGame g {FVector2{400,200}};
+    g.SetClearColor(BLACK);
     g.Run();
 
 

@@ -27,11 +27,14 @@ void Game::Update(float DeltaTime)
 void Game::Draw()
 {
     BeginDrawing();
-    ClearBackground(RAYWHITE);
+    ClearBackground(clearColor);
 
-    DrawText("Hello Ray!", 300, 200, 30, GREEN);
 
     EndDrawing();
+}
+
+void Game::SetClearColor(Color cl){
+    clearColor = cl;
 }
 
 FVector2 Game::GetScreenSize() const

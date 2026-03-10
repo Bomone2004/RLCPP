@@ -11,15 +11,14 @@ class Game
     FVector2 ScreenSize;
     std::string Title;
     bool shouldClose;
+    Color clearColor;
 
     public:
     
-    Game(FVector2 screenSize, const std::string& title) : ScreenSize(screenSize), Title(title), shouldClose(false)
+    Game(FVector2 screenSize, const std::string& title) : ScreenSize(screenSize), Title(title), shouldClose(false), clearColor(RAYWHITE)
     {
         InitWindow(ScreenSize.x, ScreenSize.y, Title.c_str());
         SetTargetFPS(60);
-
-
     };
 
     ~Game()
@@ -31,7 +30,7 @@ class Game
 
     void Run();
     void Quit();
-
+    void SetClearColor(Color cl);
     protected:
     virtual void Update(float DeltaTime);
     virtual void Draw();

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.2)
+cmake_minimum_required(VERSION 3.15...4.2)
 project(RaylibCPP)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -18,7 +18,14 @@ set(OPENGL_VERSION "4.3" CACHE STRING "OpenGL version" FORCE)
  
 FetchContent_MakeAvailable(raylib)
 
-add_executable(${PROJECT_NAME} src/main.cpp src/utility/FVector2.cpp src/core/Game.cpp)
+add_executable(${PROJECT_NAME} 
+src/main.cpp 
+src/utility/FVector2.cpp 
+src/core/Game.cpp 
+src/core/GameObject.cpp 
+src/pong/PongGame.cpp
+src/pong/TestGO.cpp
+)
 
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
