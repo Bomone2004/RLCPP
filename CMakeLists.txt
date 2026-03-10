@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 4.2)
 project(RaylibCPP)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -15,12 +15,14 @@ FetchContent_Declare(
 set(BUILD_EXAMPLES OFF CACHE BOOL "Build Examples" FORCE)
 set(BUILD_GAMES OFF CACHE BOOL "Build Games" FORCE)
 set(OPENGL_VERSION "4.3" CACHE STRING "OpenGL version" FORCE)
-
+ 
 FetchContent_MakeAvailable(raylib)
 
-add_executable(${PROJECT_NAME} src/main.cpp)
+add_executable(${PROJECT_NAME} src/main.cpp src/utility/FVector2.cpp)
+
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
+target_include_directories(${PROJECT_NAME} PRIVATE include)
 
 if(WIN32)
     target_link_libraries(${PROJECT_NAME} PRIVATE winmm gdi32)

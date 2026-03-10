@@ -1,4 +1,5 @@
 #include "raylib.h"
+#include "utility/FVector2.h"
 // FULL OBJECT ORIENTED
 // Classe Game -> da cui ereditiamo per fare le nostre classi game
 //      class Pong : public Game{};
@@ -16,25 +17,32 @@
 
 // estendere il vector2
 
-struct FVector2: Vector2{
+//-Include cartella
+//  -utility
+//  -core
 
-    FVector2(float x = 0, float y = 0) : Vector2{x, y} {};
 
 
-    // Overload operatori
-    FVector2 operator+(const FVector2& other) const{
-        return FVector2(x + other.x, y + other.y);
-    }
+// struct FVector2: Vector2{
+
+//     FVector2(float x = 0, float y = 0) : Vector2{x, y} {};
+
+
+//     // Overload operatori
+//     FVector2 operator+(const FVector2& other) const{
+//         return FVector2(x + other.x, y + other.y);
+//     }
     
-    //utility
-    float Dot(const FVector2& other)const {
-        return x*other.x + y*other.y;
-    }
-};
+//     //utility
+//     float Dot(const FVector2& other)const {
+//         return x*other.x + y*other.y;
+//     }
+// };
 
 int main(){
     //open window 
     InitWindow(800, 450, "HelloRay");
+
     //game loop while 
     while(!WindowShouldClose())
     {
