@@ -31,6 +31,7 @@ class Game
     void Run();
     void Quit();
     void SetClearColor(Color cl);
+    virtual void InitGame() = 0;
     protected:
     virtual void Update(float DeltaTime);
     virtual void Draw();

@@ -24,8 +24,8 @@
 int main(){
     PongGame g {FVector2{400,200}};
     g.SetClearColor(BLACK);
+    g.InitGame();
     g.Run();
-
 
     return 0;
 }

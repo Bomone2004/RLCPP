@@ -5,6 +5,17 @@ float FVector2::Dot(const FVector2& other) const
     return x*other.x + y*other.y; 
 }
 
+FVector2 FVector2::Nomalized() const
+{
+    const float magn = sqrtf(Dot(*this));
+    if (magn == 0) return FVector2();
+    FVector2 norm;
+    norm.x = x / magn;
+    norm.y = y / magn;
+
+    return norm;
+}
+
 float FVector2::SqrDistance(const FVector2& A, const FVector2& B)
 {
     float dx = A.x - B.x;

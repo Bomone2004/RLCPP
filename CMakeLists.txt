@@ -23,6 +23,7 @@ src/main.cpp
 src/utility/FVector2.cpp 
 src/core/Game.cpp 
 src/core/GameObject.cpp 
+src/core/InputManager.cpp 
 src/pong/PongGame.cpp
 src/pong/TestGO.cpp
 )

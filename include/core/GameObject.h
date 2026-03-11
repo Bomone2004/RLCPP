@@ -1,5 +1,9 @@
 #pragma once
+
 #include "utility/FVector2.h"
+//#include <memory>
+
+class Game;
 
 class GameObject{
 protected:
@@ -8,8 +12,10 @@ protected:
     float radius; // TODO: Togliere raggio di collisione e spostarlo in classe a parte (o figlia o altro)
     bool active;
 
+    Game* game;
+
 public: 
-    GameObject(FVector2 position = {0,0}, float radius =0):position(position),
+    GameObject(Game* g, FVector2 position = {0,0}, float radius =0): game(g), position(position),
     velocity(FVector2{0,0}),
     radius(radius),
     active(true){}
