@@ -47,7 +47,7 @@ void InputManager::Update()
     }
 
     const FVector2 oldMousePos = mousePos;
-    mousePos = {GetMousePosition().x, GetMousePosition().y};
+    mousePos = GetMousePosition();
     mouseDelta = mousePos - oldMousePos;
     mouseWheel = GetMouseWheel();
 }

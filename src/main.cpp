@@ -23,7 +23,7 @@
 
 int main(){
     PongGame g {FVector2{400,200}};
-    g.SetClearColor(BLACK);
+    g.SetClearColor(BLACK); // Questo probabilmente dovrebbe stare dentro init game
     g.InitGame();
     g.Run();
 

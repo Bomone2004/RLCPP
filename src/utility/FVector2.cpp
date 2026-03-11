@@ -1,4 +1,5 @@
 #include "utility/FVector2.h"
+#include "raymath.h"
 #include <cmath>
 float FVector2::Dot(const FVector2& other) const
 {
@@ -7,13 +8,7 @@ float FVector2::Dot(const FVector2& other) const
 
 FVector2 FVector2::Nomalized() const
 {
-    const float magn = sqrtf(Dot(*this));
-    if (magn == 0) return FVector2();
-    FVector2 norm;
-    norm.x = x / magn;
-    norm.y = y / magn;
-
-    return norm;
+    return {Vector2Normalize(*this)};
 }
 
 float FVector2::SqrDistance(const FVector2& A, const FVector2& B)
