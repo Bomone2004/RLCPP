@@ -5,7 +5,7 @@ class GameObject{
 protected:
     FVector2 position;
     FVector2 velocity;
-    float radius; // raggio di collisione
+    float radius; // TODO: Togliere raggio di collisione e spostarlo in classe a parte (o figlia o altro)
     bool active;
 
 public: 
@@ -33,5 +33,5 @@ public:
 
     void Destroy();
 
-    bool CheckCollision(const GameObject& other) const; 
+    bool CheckCollision(const GameObject& other) const; // TODO: Se togliamo il raggio, spostare codice per collisione
 };
