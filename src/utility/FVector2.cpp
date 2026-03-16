@@ -20,3 +20,8 @@ float FVector2::SqrDistance(const FVector2& A, const FVector2& B)
 float FVector2::Distance(const FVector2& A, const FVector2& B){
     return std::sqrt(SqrDistance(A,B));
 }
+
+float FVector2::Magnitude()
+{
+   return Vector2Length({x,y});
+}

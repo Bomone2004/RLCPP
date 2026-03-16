@@ -21,7 +21,10 @@ struct FVector2 : Vector2
     {
         return FVector2(x * scalar, y * scalar);
     }
-    
+
+    float Magnitude();
+
+
     //======= Funzioni Utility ======= 
     float Dot(const FVector2& other)const;
 
