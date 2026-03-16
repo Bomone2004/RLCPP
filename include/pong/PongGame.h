@@ -2,7 +2,8 @@
 #include "core/Game.h"
 #include "core/GameObject.h"
 #include "core/InputManager.h"
-#include "pong/TestGO.h"
+#include "pong/Ball.h"
+#include "pong/Paddle.h"
 #include <vector>
 #include <memory>
 
@@ -18,7 +19,8 @@ public:
         //Creare i nostri Gameobject;
 
         inputManager = std::make_unique<InputManager>();
-        GameObjects.push_back(std::make_unique<TestGameObject>(this, FVector2{33,33}, 5, RAYWHITE));
+        GameObjects.push_back(std::make_unique<Ball>(this, FVector2{33,33}, 5, RAYWHITE, 100));
+        GameObjects.push_back(std::make_unique<Paddle>(this,FVector2{ 100, 100}, RAYWHITE, 50, FVector2{10, 40}));
     }
 
     const InputManager* GetInputManager() const;

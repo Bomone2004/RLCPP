@@ -25,7 +25,8 @@ src/core/Game.cpp
 src/core/GameObject.cpp 
 src/core/InputManager.cpp 
 src/pong/PongGame.cpp
-src/pong/TestGO.cpp
+src/pong/Ball.cpp
+src/pong/Paddle.cpp
 )
 
 
