@@ -33,3 +33,22 @@ bool GameObject::IsActive()const{
 void GameObject::Destroy(){
     active = false;
 }
+
+// Trasferisce la ownership del componente al vector interno tramite std::move
+void GameObject::AddComponent(std::unique_ptr<Component> comp){
+    components.push_back(std::move(comp));
+}
+
+// Itera su tutti i componenti e chiama il loro Update
+void GameObject::UpdateComponents(float deltaTime){
+    for(auto& c : components){
+        c->Update(deltaTime);
+    }
+}
+
+// Itera su tutti i componenti e chiama il loro Draw
+void GameObject::DrawComponents(){
+    for(auto& c : components){
+        c->Draw();
+    }
+}

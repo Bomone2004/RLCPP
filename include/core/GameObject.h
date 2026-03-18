@@ -1,6 +1,8 @@
 #pragma once
 #include "utility/FVector2.h"
-//#include <memory>
+#include "core/Component.h"
+#include <vector>
+#include <memory>
 
 class Game;
 
@@ -10,12 +12,14 @@ protected:
     FVector2 velocity;
     float radius; // raggio di collisione
     bool active;
-    float speed;    
+    float speed;
 
 
     Game* game;
 
-public: 
+    std::vector<std::unique_ptr<Component>> components; // Collection di componenti (ownership tramite unique_ptr)
+
+public:
     GameObject(Game* g, FVector2 position = {0,0}, float speed = 0): game(g), position(position),
     velocity(FVector2{0,0}),
     radius(radius),
@@ -24,7 +28,7 @@ public:
     virtual ~GameObject(){}
 
     virtual void Start() = 0;
-    virtual void Update(float deltaTime) = 0; 
+    virtual void Update(float deltaTime) = 0;
     virtual void Draw() = 0;
 
     //=======Components=======
@@ -55,4 +59,10 @@ public:
     bool IsActive()const;
 
     void Destroy();
+
+protected:
+    // Da chiamare dentro Update() delle classi figlie per aggiornare tutti i componenti
+    void UpdateComponents(float deltaTime);
+    // Da chiamare dentro Draw() delle classi figlie per disegnare tutti i componenti
+    void DrawComponents();
 };

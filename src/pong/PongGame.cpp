@@ -1,4 +1,6 @@
 #include "pong/PongGame.h"
+#include "core/Collider.h"
+#include <string>
 
 const InputManager* PongGame::GetInputManager() const
 {
@@ -24,7 +26,7 @@ void PongGame::InitGame()
 void PongGame::Update(float DeltaTime){
 
     inputManager->Update();
-    
+
     for(auto& go : GameObjects){
 
         if(!go->IsActive()) continue;
