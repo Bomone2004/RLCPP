@@ -63,6 +63,11 @@ void CollisionManager::Update()
                         Aggiungere On collision stay
                         E gestire queste chiamate
 
+                        per testare questo fatelo con i colori
+                            -> enter: rossa
+                            -> stay: blu
+                            -> exit: bianca
+
                 */
 
 

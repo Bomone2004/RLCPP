@@ -22,7 +22,7 @@ namespace AIV_Collision{
     /* TODO 18/03 
 
     Potrebbe essere il caso di gestire questa cosa con i template
-    Base: Ipotizzare una possibile implementazione
+    Base: Ipotizzare una possibile implementazione e valutare se possibile. (MOLTO IMPORTANTE)
     Avanzato: implementazione 
     
     
