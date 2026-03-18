@@ -2,6 +2,7 @@
 
 #include "utility/FVector2.h"
 //#include <memory>
+#include "core/Collider.h"
 
 class Game;
 
