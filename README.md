@@ -54,8 +54,9 @@ Fork the repo and do homework there
 - Guardate il commento nel main.cpp (riga 26)
 
 
-
-
+18/03/2026
+Guardare CollisionManager.cpp e Collider.h
+Ci sono due commenti con le todo list
 
 
 /////

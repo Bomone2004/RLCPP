@@ -7,6 +7,7 @@
 #include "core/Collider.h"
 #include "core/GameObject.h"
 #include "core/InputManager.h"
+#include "core/CollisionManager.h"
 
 class Game
 {
@@ -18,13 +19,16 @@ class Game
     bool shouldClose;
     Color clearColor;
 
-    std::unique_ptr<InputManager> inputManager;
+    std::unique_ptr<InputManager>inputManager;
+    std::unique_ptr<CollisionManager> collisionManager;
     std::vector<std::shared_ptr<GameObject>> GameObjects;
 
     public:
     
     Game(FVector2 screenSize, const std::string& title) : ScreenSize(screenSize), Title(title), shouldClose(false), clearColor(RAYWHITE)
     {
+        inputManager = std::make_unique<InputManager>();
+        collisionManager = std::make_unique<CollisionManager>();
         InitWindow(ScreenSize.x, ScreenSize.y, Title.c_str());
         SetTargetFPS(60);
     };

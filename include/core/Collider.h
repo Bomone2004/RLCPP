@@ -19,7 +19,14 @@ namespace AIV_Collision{
         CircleCollider(float r):radius(r){}
        
     };
+    /* TODO 18/03 
+
+    Potrebbe essere il caso di gestire questa cosa con i template
+    Base: Ipotizzare una possibile implementazione
+    Avanzato: implementazione 
     
+    
+    */ 
     struct CollisionFunctions{
         static bool CheckCollision(const RectCollider& A , const RectCollider& B){
             // AA BB Secca

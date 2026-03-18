@@ -48,6 +48,24 @@ void CollisionManager::Update()
                 objA->OnCollisionEnter();
                 objB->OnCollisionEnter();
 
+                /* TODO 18/03 
+
+                    1- Mandare delle informazioni:
+                        struct CollisionInfo
+                        popolata nel CheckForCollisionPair
+                            - oggetto A 
+                            - oggetto B 
+                            Avanzata: 
+                                punto di collisione
+
+                    2- On collision enter va chiamata una volta sola.
+                        Aggiungere on collision exit
+                        Aggiungere On collision stay
+                        E gestire queste chiamate
+
+                */
+
+
             }
         }
     }
@@ -67,7 +85,7 @@ bool CollisionManager::CheckForCollisionPair(const AIV_Collision::Collider* a, c
 
 
     auto* circleA = dynamic_cast<const AIV_Collision :: CircleCollider*>(a);
-    auto* circleB = dynamic_cast<const AIV_Collision :: CircleCollider*>(a);
+    auto* circleB = dynamic_cast<const AIV_Collision :: CircleCollider*>(b);
 
     if(circleA && circleB)
     {
@@ -84,5 +102,5 @@ bool CollisionManager::CheckForCollisionPair(const AIV_Collision::Collider* a, c
         return AIV_Collision :: CollisionFunctions :: CheckCollision(*rectB,*circleA);
     }
 
-    return true;
+    return false;
 }

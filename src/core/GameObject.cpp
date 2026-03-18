@@ -22,7 +22,7 @@ void GameObject::SetActive(bool newState){
 
 void GameObject::OnCollisionEnter()
 {
-    printf("collision detected");
+    TraceLog(LOG_WARNING,"Collision");
 
 }
 

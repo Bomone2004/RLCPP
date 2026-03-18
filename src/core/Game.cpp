@@ -21,23 +21,24 @@ void Game::Quit()
 
 void Game::InitGame()
 {
-     for(auto& go : GameObjects)
+    for(auto& go : GameObjects)
     {
         if(!go->IsActive()) continue;
 
         go->Start();
+        collisionManager->RegisterCollider(go);
     }
 }
 
 void Game::Update(float DeltaTime)
 {
     inputManager->Update();
-
     for(auto& go : GameObjects)
     {   
         if(!go->IsActive()) continue;
         go->Update(DeltaTime);
     }
+    collisionManager->Update();
     
 }
 
