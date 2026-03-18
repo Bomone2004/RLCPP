@@ -15,12 +15,6 @@ FetchContent_Declare(
 set(BUILD_EXAMPLES OFF CACHE BOOL "Build Examples" FORCE)
 set(BUILD_GAMES OFF CACHE BOOL "Build Games" FORCE)
 set(OPENGL_VERSION "4.3" CACHE STRING "OpenGL version" FORCE)
-
-if(APPLE)
-    set(OPENGL_VERSION "3.3" CACHE STRING "OpenGL version" FORCE)
-else()
-    set(OPENGL_VERSION "4.3" CACHE STRING "OpenGL version" FORCE)
-endif()
  
 FetchContent_MakeAvailable(raylib)
 

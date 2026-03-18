@@ -1,5 +1,8 @@
 #pragma once
 #include "utility/FVector2.h"
+//#include <memory>
+
+class Game;
 
 class GameObject{
 protected:
@@ -7,17 +10,38 @@ protected:
     FVector2 velocity;
     float radius; // raggio di collisione
     bool active;
+    float speed;    
+
+
+    Game* game;
 
 public: 
-    GameObject(FVector2 position = {0,0}, float radius =0):position(position),
+    GameObject(Game* g, FVector2 position = {0,0}, float speed = 0): game(g), position(position),
     velocity(FVector2{0,0}),
     radius(radius),
     active(true){}
-    
+
     virtual ~GameObject(){}
 
+    virtual void Start() = 0;
     virtual void Update(float deltaTime) = 0; 
     virtual void Draw() = 0;
+
+    //=======Components=======
+    // Aggiunge un componente al GameObject (trasferisce ownership tramite move semantics)
+    void AddComponent(std::unique_ptr<Component> comp);
+
+    // Cerca un componente per tipo tramite dynamic_cast (RTTI)
+    // Ritorna nullptr se il componente non e` presente
+    template<typename T>
+    T* GetComponent() const {
+        for(auto& c : components){
+            T* found = dynamic_cast<T*>(c.get());
+            if(found) return found;
+        }
+        return nullptr;
+    }
+
     //=======Setter=======
     void SetPosition(const FVector2& newPos);
     void SetVelocity(const FVector2& newVelocity);
@@ -30,8 +54,5 @@ public:
     float GetRadius() const;
     bool IsActive()const;
 
-
     void Destroy();
-
-    bool CheckCollision(const GameObject& other) const; 
 };

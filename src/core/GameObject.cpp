@@ -33,8 +33,3 @@ bool GameObject::IsActive()const{
 void GameObject::Destroy(){
     active = false;
 }
-
-bool GameObject::CheckCollision(const GameObject& other) const{
-    //distanza tra i due cerchi deve essere minore della somma dei due raggi 
-    return FVector2::Distance(this->position, other.position) < this->radius + other.radius;
-}
