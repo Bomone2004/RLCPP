@@ -1,8 +1,15 @@
 #include "raylib.h"
 #include "core/GameObject.h"
+#include<iostream>
+#include<stdio.h>
 
 void GameObject::SetPosition(const FVector2& newPos){
     position = newPos;
+    if(GetCollider())
+    {
+        collider->position = newPos;
+    
+    }
 }
 
 void GameObject::SetVelocity(const FVector2& newVelocity)
@@ -11,6 +18,12 @@ void GameObject::SetVelocity(const FVector2& newVelocity)
 }
 void GameObject::SetActive(bool newState){
     active = newState;
+}
+
+void GameObject::OnCollisionEnter()
+{
+    printf("collision detected");
+
 }
 
 

@@ -39,7 +39,16 @@ void CollisionManager::Update()
     {
         for(int j = i + 1; j < gameobj.size(); ++j)
         {
-            CheckForCollisionPair(gameobj.at(i).lock().get()->GetCollider(), gameobj.at(j).lock().get()->GetCollider());
+            auto objA = gameobj.at(i).lock();
+            auto objB = gameobj.at(j).lock();
+
+            if(CheckForCollisionPair(objA.get()->GetCollider(), objB.get()->GetCollider()))
+            {
+                //collision detected
+                objA->OnCollisionEnter();
+                objB->OnCollisionEnter();
+
+            }
         }
     }
     
@@ -47,5 +56,33 @@ void CollisionManager::Update()
 
 bool CollisionManager::CheckForCollisionPair(const AIV_Collision::Collider* a, const AIV_Collision::Collider* b)
 {
+    //dynamic cast returns a valid ptr only IF conversion exists, otherwise nullptr
+    auto* rectA = dynamic_cast<const AIV_Collision :: RectCollider*>(a);
+    auto* rectB = dynamic_cast<const AIV_Collision :: RectCollider*>(b);
+
+    if(rectA && rectB)
+    {
+        return AIV_Collision :: CollisionFunctions :: CheckCollision(*rectA,*rectB);
+    }
+
+
+    auto* circleA = dynamic_cast<const AIV_Collision :: CircleCollider*>(a);
+    auto* circleB = dynamic_cast<const AIV_Collision :: CircleCollider*>(a);
+
+    if(circleA && circleB)
+    {
+        return AIV_Collision :: CollisionFunctions :: CheckCollision(*circleA,*circleB);
+    }
+
+
+    if(rectA && circleB)
+    {
+        return AIV_Collision :: CollisionFunctions :: CheckCollision(*rectA,*circleB);
+    }
+    if(circleA && rectB)
+    {
+        return AIV_Collision :: CollisionFunctions :: CheckCollision(*rectB,*circleA);
+    }
+
     return true;
 }

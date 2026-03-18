@@ -29,6 +29,10 @@ public:
     virtual void Start() = 0;
     virtual void Update(float deltaTime) = 0; 
     virtual void Draw() = 0;
+
+    virtual void OnCollisionEnter();
+    //virtual void OnCollisionExit();
+
     //=======Setter=======
     void SetPosition(const FVector2& newPos);
     void SetVelocity(const FVector2& newVelocity);

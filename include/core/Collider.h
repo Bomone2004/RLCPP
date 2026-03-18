@@ -6,14 +6,18 @@ namespace AIV_Collision{
     struct Collider 
     { 
         FVector2 position;
+        virtual ~Collider() = default;
     };
     
     struct RectCollider: public Collider{
         FVector2 extents; //w, h
+        RectCollider(FVector2 size):extents(size){}
     };
     
     struct CircleCollider: public Collider{ 
         float radius;
+        CircleCollider(float r):radius(r){}
+       
     };
     
     struct CollisionFunctions{
@@ -27,6 +31,8 @@ namespace AIV_Collision{
             return overlap;
         }               
 
+
+
         static   bool CheckCollision(const CircleCollider& A, const CircleCollider& B){
             float distanceSqr = FVector2::SqrDistance(A.position, B.position);
             return distanceSqr < (A.radius + B.radius)*(A.radius + B.radius);
@@ -35,6 +41,8 @@ namespace AIV_Collision{
             return distance < (A.radius + B.radius);
             */
         }
+
+
             
         static bool CheckCollision(const RectCollider& R, const CircleCollider& C){
             FVector2 closestPoint; 

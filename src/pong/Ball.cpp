@@ -46,3 +46,4 @@ void Ball::Draw()
 {
     DrawCircle(position.x, position.y, radius,ObjColor);
 }
+
