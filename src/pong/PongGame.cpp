@@ -13,34 +13,16 @@ void PongGame::InitGame()
     inputManager->BindKey(Action::MOVE_RIGHT, KEY_D);
     inputManager->BindKey(Action::MOVE_LEFT, KEY_A);
 
-    for(auto& go : GameObjects)
-    {
-        if(!go->IsActive()) continue;
-
-        go->Start();
-    }
+    Game::InitGame();
 }
 
-void PongGame::Update(float DeltaTime){
-
-    inputManager->Update();
-    
-    for(auto& go : GameObjects){
-
-        if(!go->IsActive()) continue;
-
-        go->Update(DeltaTime);
-    }
+void PongGame::Update(float DeltaTime)
+{
+    Game::Update(DeltaTime);
 }
 
 void PongGame::Draw(){
+
     Game::Draw();
-    
-
-    for(auto& go : GameObjects){
-        if(!go->IsActive()) continue;
-
-        go->Draw();
-    }
 
 }

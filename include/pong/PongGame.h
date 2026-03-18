@@ -1,17 +1,13 @@
 #pragma once 
 #include "core/Game.h"
-#include "core/GameObject.h"
-#include "core/InputManager.h"
 #include "pong/Ball.h"
 #include "pong/Paddle.h"
-#include <vector>
-#include <memory>
+
 
 class PongGame: public Game
 {
 
-std::unique_ptr<InputManager> inputManager;
-std::vector<std::unique_ptr<GameObject>> GameObjects;
+
 
 public:
     PongGame(FVector2 screenSize):Game(screenSize, "Pong")

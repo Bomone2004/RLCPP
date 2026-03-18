@@ -19,9 +19,26 @@ void Game::Quit()
     shouldClose = true;
 }
 
+void Game::InitGame()
+{
+     for(auto& go : GameObjects)
+    {
+        if(!go->IsActive()) continue;
+
+        go->Start();
+    }
+}
+
 void Game::Update(float DeltaTime)
 {
+    inputManager->Update();
 
+    for(auto& go : GameObjects)
+    {   
+        if(!go->IsActive()) continue;
+        go->Update(DeltaTime);
+    }
+    
 }
 
 void Game::Draw()
@@ -29,6 +46,11 @@ void Game::Draw()
     BeginDrawing();
     ClearBackground(clearColor);
 
+    for(auto& go : GameObjects){
+        if(!go->IsActive()) continue;
+
+        go->Draw();
+    }
 
     EndDrawing();
 }

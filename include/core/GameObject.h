@@ -1,8 +1,8 @@
 #pragma once
 
 #include "utility/FVector2.h"
-//#include <memory>
 #include "core/Collider.h"
+#include <memory>
 
 class Game;
 
@@ -14,6 +14,7 @@ protected:
     bool active;
     float speed;    
 
+    std::shared_ptr<AIV_Collision::Collider> collider;
 
     Game* game;
 
@@ -36,6 +37,9 @@ public:
     //=======Getter=======
     FVector2 GetPosition() const;
     FVector2 GetVelocity() const;
+    
+    AIV_Collision::Collider* GetCollider() const;
+
     bool IsActive()const;
 
 

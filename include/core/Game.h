@@ -1,17 +1,25 @@
 #pragma once
 #include "raylib.h"
 #include <string>
+#include <vector>
+#include <memory>
 #include "utility/FVector2.h"
+#include "core/Collider.h"
+#include "core/GameObject.h"
+#include "core/InputManager.h"
 
 class Game
 {
     //width, height FVector2
     //titolo string
-    private:
+    protected:
     FVector2 ScreenSize;
     std::string Title;
     bool shouldClose;
     Color clearColor;
+
+    std::unique_ptr<InputManager> inputManager;
+    std::vector<std::shared_ptr<GameObject>> GameObjects;
 
     public:
     
@@ -31,10 +39,11 @@ class Game
     void Run();
     void Quit();
     void SetClearColor(Color cl);
-    virtual void InitGame() = 0;
+    virtual void InitGame();
     protected:
     virtual void Update(float DeltaTime);
     virtual void Draw();
+    
 
     public:
     FVector2 GetScreenSize() const;

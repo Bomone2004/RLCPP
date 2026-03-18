@@ -20,6 +20,11 @@ FVector2 GameObject::GetPosition() const{
 FVector2 GameObject::GetVelocity() const{
     return velocity;
 }
+AIV_Collision::Collider* GameObject::GetCollider() const
+{
+    return collider.get();
+}
+
 bool GameObject::IsActive()const{
     return active;
 }
