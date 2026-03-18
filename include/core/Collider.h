@@ -16,29 +16,6 @@ namespace AIV_Collision{
         float radius;
     };
     
-    
-    /*
-    
-    A.x A.y         A.x + W 
-    ________________
-    |               |
-    |               |
-    |               |
-    |               |
-    |_______________|
-    A.y + H 
-                B.x  B.y      B.x + W 
-                ________________
-                |               |
-                |               |
-                |               |
-                |               |
-                |_______________|
-                B.y + H 
-    
-    */
-
-
 
     bool CheckCollision(const RectCollider& A , const RectCollider& B){
         // AA BB Secca
@@ -73,4 +50,44 @@ namespace AIV_Collision{
 
     }
     
+
+    /*
+    class gameobject{ 
+        ptr<AIV_Collision::Collider>  
+    }
+    
+    
+
+    class CollisionManager{ 
+        std::vector<ptr<gameobject>> 
+
+    public:
+        void RegisterCollider(/*un Gameobject )
+
+        void UnregisterCollider(/*un Gameobject)
+
+        void Update(){
+            foreach(collider){
+                CheckForCollisionPair()
+
+                // Ci si aprono delle strade (che vedremo)
+            }
+        }
+    private:
+        bool CheckForCollisionPair( coll A , coll B );
+
+    }
+
+    class Game{ 
+        ptr<CollisionManager> mgr
+
+
+        void Update()
+        {
+            // Quello che gia` fa
+            mgr->Update();
+        }
+    }
+    
+    */
 }
