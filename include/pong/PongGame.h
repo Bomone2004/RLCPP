@@ -14,8 +14,8 @@ public:
     {
         //Creare i nostri Gameobject;
 
-        GameObjects.push_back(std::make_unique<Ball>(this, FVector2{33,33}, 5, RAYWHITE, 100));
-        GameObjects.push_back(std::make_unique<Paddle>(this,FVector2{ 100, 100}, RAYWHITE, 50, FVector2{10, 40}));
+        GameObjects.push_back(std::make_unique<Ball>(this, FVector2{33,33}, 15, RAYWHITE, 100));
+        GameObjects.push_back(std::make_unique<Paddle>(this,FVector2{ 100, 100}, RAYWHITE, 50, FVector2{30, 120}));
     }
 
     const InputManager* GetInputManager() const;

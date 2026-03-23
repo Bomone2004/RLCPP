@@ -22,7 +22,7 @@
 
 
 int main(){
-    PongGame g {FVector2{400,200}};
+    PongGame g {FVector2{400,400}};
     //g.SetClearColor(BLACK); // Questo probabilmente dovrebbe stare dentro init game
     g.InitGame();
     g.Run();

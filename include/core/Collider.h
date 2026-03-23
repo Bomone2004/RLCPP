@@ -14,6 +14,7 @@ namespace AIV_Collision{
     { 
         FVector2 position;
         FVector2 offset;
+        bool isColliding;
         virtual ~Collider() = default;
     };
     

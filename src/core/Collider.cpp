@@ -2,7 +2,7 @@
 namespace AIV_Collision{
 
 
-    bool CheckCollision(const RectCollider& A , const AIV_Collision::RectCollider& B){
+    bool CheckCollision(const RectCollider& A , const RectCollider& B){
             // AA BB Secca
             bool overlap = A.position.x < B.position.x + B.extents.x && //rettangolo A e` a sinistra di B
                             A.position.x + A.extents.x > B.position.x &&

@@ -44,6 +44,7 @@ void CollisionManager::Update()
             
             if(CheckForCollisionPair(objA.get()->GetCollider(), objB.get()->GetCollider()))
             {
+                
                 AIV_Collision::FCollisionInfo cInfo;
                 cInfo.dx = objA.get()->GetPosition().x - objB.get()->GetPosition().x;
                 cInfo.dy = objA.get()->GetPosition().y - objB.get()->GetPosition().y;
@@ -56,8 +57,17 @@ void CollisionManager::Update()
 
 
                 //collision detected
-                objA->OnCollisionEnter(cInfoA);
-                objB->OnCollisionEnter(cInfoB);
+                if(!objA->GetCollider()->isColliding)
+                {
+                    objA->OnCollisionEnter(cInfoA);
+                }
+                if(!objB->GetCollider()->isColliding)
+                {
+                    objB->OnCollisionEnter(cInfoB);
+                }
+
+                objA->GetCollider()->isColliding = true;
+                objB->GetCollider()->isColliding = true;
 
                 /* TODO 18/03 
 
@@ -82,6 +92,11 @@ void CollisionManager::Update()
                 */
 
 
+            }
+            else
+            {
+                objA->GetCollider()->isColliding = false;
+                objB->GetCollider()->isColliding = false;
             }
         }
     }

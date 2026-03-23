@@ -50,6 +50,16 @@ void Ball::Draw()
 
 
 void Ball::OnCollisionEnter(AIV_Collision::FCollisionInfo CollisionInfo){
-    velocity.x = -velocity.x;
+
+    if(CollisionInfo.dy <= 0)
+    {
+        velocity.y =- velocity.y;
+    }
+    else
+    {
+        velocity.x = -velocity.x;
+
+    }
+
     std::cout<< CollisionInfo.dx<<","<<CollisionInfo.dy<<std::endl;
 }

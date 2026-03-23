@@ -22,7 +22,9 @@ void GameObject::SetActive(bool newState){
 
 void GameObject::OnCollisionEnter(AIV_Collision::FCollisionInfo CollisionInfo)
 {
+
     TraceLog(LOG_WARNING,"Collision");
+
 
 }
 
