@@ -44,22 +44,22 @@ void Ball::ChangeColor()
 
 void Ball::Draw()
 {
+    GameObject::Draw();
     DrawCircle(position.x+pivotOffset.x, position.y +pivotOffset.y, radius,ObjColor);
-    DrawCircleLines(collider->position.x , collider->position.y, radius, GREEN);
 }
 
 
 void Ball::OnCollisionEnter(AIV_Collision::FCollisionInfo CollisionInfo){
 
-    if(CollisionInfo.dy <= 0)
+    GameObject::OnCollisionEnter(CollisionInfo);
+    if(CollisionInfo.Overlap.x< CollisionInfo.Overlap.y)
     {
-        velocity.y =- velocity.y;
+        velocity.x =- velocity.x;
     }
     else
     {
-        velocity.x = -velocity.x;
+        velocity.y = -velocity.y;
 
     }
 
-    std::cout<< CollisionInfo.dx<<","<<CollisionInfo.dy<<std::endl;
 }

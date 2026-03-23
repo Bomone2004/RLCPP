@@ -5,28 +5,32 @@
 namespace AIV_Collision{
    struct FCollisionInfo{
        // std::weak_ptr<GameObject> other;
-        float dx;
-        float dy; 
-
+        FVector2 Overlap;
     };
 
     struct Collider 
     { 
         FVector2 position;
         FVector2 offset;
+        Color color = GREEN;
         bool isColliding;
+        bool shouldDrawDebug;
         virtual ~Collider() = default;
+        virtual void DrawDebug() = 0;
     };
     
     struct RectCollider: public Collider{
         FVector2 extents; //w, h
         RectCollider(FVector2 size):extents(size){}
+
+        virtual void DrawDebug() override;
     };
     
     struct CircleCollider: public Collider{ 
         float radius;
         CircleCollider(float r):radius(r){}
-       
+
+        virtual void DrawDebug() override;
     };
 
  
@@ -39,10 +43,10 @@ namespace AIV_Collision{
     
     */ 
    
-    bool CheckCollision(const RectCollider& A , const RectCollider& B);
-    bool CheckCollision(const CircleCollider& A, const CircleCollider& B);    
-    bool CheckCollision(const RectCollider& R, const CircleCollider& C);
-    bool CheckCollision(const CircleCollider& C,const RectCollider& R);
+    bool CheckCollision(const RectCollider& A , const RectCollider& B   ,FCollisionInfo& cInfo);
+    bool CheckCollision(const CircleCollider& A, const CircleCollider& B,FCollisionInfo& cInfo);    
+    bool CheckCollision(const RectCollider& R, const CircleCollider& C  ,FCollisionInfo& cInfo);
+    bool CheckCollision(const CircleCollider& C,const RectCollider& R   ,FCollisionInfo& cInfo);
 
 
 

@@ -12,8 +12,8 @@ public:
     {
         collider = std::make_shared<AIV_Collision::CircleCollider>(radius);
         collider->position = position;
-
-
+        collider->shouldDrawDebug = true;
+        collider->color = BLUE;
     }
     ~Ball(){}
 

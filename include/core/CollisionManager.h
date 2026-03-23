@@ -19,5 +19,5 @@ public:
     
 private:
 
-    bool CheckForCollisionPair(const AIV_Collision::Collider* a,const AIV_Collision::Collider* b);
+    bool CheckForCollisionPair(const AIV_Collision::Collider* a,const AIV_Collision::Collider* b, AIV_Collision::FCollisionInfo& cInfo);
 };

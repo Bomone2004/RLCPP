@@ -22,12 +22,23 @@ void GameObject::SetActive(bool newState){
 
 void GameObject::OnCollisionEnter(AIV_Collision::FCollisionInfo CollisionInfo)
 {
-
-    TraceLog(LOG_WARNING,"Collision");
+    if(collider->shouldDrawDebug){
+        TraceLog(LOG_WARNING,"Collision Enter");
+    }
 
 
 }
-
+void GameObject::OnCollisionExit(AIV_Collision::FCollisionInfo CollisionInfo){
+    if(collider->shouldDrawDebug){
+        TraceLog(LOG_WARNING,"Collision Exit");
+    }
+}
+void GameObject::OnCollisionStay(AIV_Collision::FCollisionInfo CollisionInfo)
+{
+    if(collider->shouldDrawDebug){
+        TraceLog(LOG_WARNING,"Collision Stay");
+    }
+}
 
 FVector2 GameObject::GetPosition() const{
     return position;
@@ -46,4 +57,8 @@ bool GameObject::IsActive()const{
 
 void GameObject::Destroy(){
     active = false;
+}
+
+void GameObject::Draw(){
+    collider->DrawDebug();
 }

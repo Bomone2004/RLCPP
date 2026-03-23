@@ -29,10 +29,12 @@ public:
 
     virtual void Start() = 0;
     virtual void Update(float deltaTime) = 0; 
-    virtual void Draw() = 0;
+    virtual void Draw();
 
     virtual void OnCollisionEnter(AIV_Collision::FCollisionInfo CollisionInfo);
-    //virtual void OnCollisionExit();
+    virtual void OnCollisionExit(AIV_Collision::FCollisionInfo CollisionInfo);
+    virtual void OnCollisionStay(AIV_Collision::FCollisionInfo CollisionInfo);
+
 
     //=======Setter=======
     void SetPosition(const FVector2& newPos);

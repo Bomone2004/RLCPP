@@ -13,6 +13,7 @@ public:
         collider->position = position ;
         pivotOffset = FVector2(-Bounds.x/2, -Bounds.y/2);
         collider->offset = pivotOffset;
+        collider->shouldDrawDebug = false;
         
     }
 

@@ -42,18 +42,14 @@ void CollisionManager::Update()
             auto objA = gameobj.at(i).lock();
             auto objB = gameobj.at(j).lock();
             
-            if(CheckForCollisionPair(objA.get()->GetCollider(), objB.get()->GetCollider()))
+            AIV_Collision::FCollisionInfo cInfo;
+            if(CheckForCollisionPair(objA.get()->GetCollider(), objB.get()->GetCollider(),cInfo))
             {
                 
-                AIV_Collision::FCollisionInfo cInfo;
-                cInfo.dx = objA.get()->GetPosition().x - objB.get()->GetPosition().x;
-                cInfo.dy = objA.get()->GetPosition().y - objB.get()->GetPosition().y;
                 AIV_Collision::FCollisionInfo cInfoA;
                 AIV_Collision::FCollisionInfo cInfoB;
-                cInfoA.dx = cInfo.dx;
-                cInfoB.dx = -cInfo.dx;
-                cInfoA.dy = cInfo.dy;
-                cInfoB.dy = -cInfo.dy;
+                cInfoA.Overlap = cInfo.Overlap;
+                cInfoB.Overlap = cInfo.Overlap;
 
 
                 //collision detected
@@ -61,9 +57,15 @@ void CollisionManager::Update()
                 {
                     objA->OnCollisionEnter(cInfoA);
                 }
+                else{
+                    objA->OnCollisionStay(cInfoA);
+                }
                 if(!objB->GetCollider()->isColliding)
                 {
                     objB->OnCollisionEnter(cInfoB);
+                }
+                else{
+                    objA->OnCollisionStay(cInfoB);
                 }
 
                 objA->GetCollider()->isColliding = true;
@@ -95,6 +97,14 @@ void CollisionManager::Update()
             }
             else
             {
+                if(objA->GetCollider()->isColliding)
+                {
+                    objA->OnCollisionExit(cInfo);
+                }
+                if(objB->GetCollider()->isColliding)
+                {
+                    objB->OnCollisionExit(cInfo);
+                }
                 objA->GetCollider()->isColliding = false;
                 objB->GetCollider()->isColliding = false;
             }
@@ -103,7 +113,7 @@ void CollisionManager::Update()
     
 }
 
-bool CollisionManager::CheckForCollisionPair(const AIV_Collision::Collider* a, const AIV_Collision::Collider* b )
+bool CollisionManager::CheckForCollisionPair(const AIV_Collision::Collider* a, const AIV_Collision::Collider* b, AIV_Collision::FCollisionInfo& cInfo )
 {
     //dynamic cast returns a valid ptr only IF conversion exists, otherwise nullptr
     auto* rectA = dynamic_cast<const AIV_Collision :: RectCollider*>(a);
@@ -111,7 +121,7 @@ bool CollisionManager::CheckForCollisionPair(const AIV_Collision::Collider* a, c
 
     if(rectA && rectB)
     {
-        return AIV_Collision  :: CheckCollision(*rectA,*rectB);
+        return AIV_Collision::CheckCollision(*rectA,*rectB, cInfo);
     }
 
 
@@ -120,17 +130,17 @@ bool CollisionManager::CheckForCollisionPair(const AIV_Collision::Collider* a, c
 
     if(circleA && circleB)
     {
-        return AIV_Collision :: CheckCollision(*circleA,*circleB);
+        return AIV_Collision::CheckCollision(*circleA,*circleB, cInfo);
     }
 
 
     if(rectA && circleB)
     {
-        return AIV_Collision  :: CheckCollision(*rectA,*circleB);
+        return AIV_Collision::CheckCollision(*rectA,*circleB, cInfo);
     }
     if(circleA && rectB)
     {
-        return AIV_Collision :: CheckCollision(*circleA,*rectB);
+        return AIV_Collision::CheckCollision(*circleA,*rectB, cInfo);
     }
 
     return false;

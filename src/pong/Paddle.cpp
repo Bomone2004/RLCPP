@@ -29,7 +29,6 @@ void Paddle::Update(float deltatime)
 
 void Paddle::Draw()
 {
+    GameObject::Draw();
     DrawRectangle(position.x+pivotOffset.x, position.y +pivotOffset.y, Bounds.x,Bounds.y, ObjColor);
-
-    DrawRectangleLines(collider->position.x, collider->position.y, Bounds.x,Bounds.y, GREEN );
 }
