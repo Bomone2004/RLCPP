@@ -10,6 +10,7 @@ class GameObject{
 protected:
     FVector2 position;
     FVector2 velocity;
+    FVector2 pivotOffset;
     //float radius; // TODO: Togliere raggio di collisione e spostarlo in classe a parte (o figlia o altro)
     bool active;
     float speed;    
@@ -30,7 +31,7 @@ public:
     virtual void Update(float deltaTime) = 0; 
     virtual void Draw() = 0;
 
-    virtual void OnCollisionEnter();
+    virtual void OnCollisionEnter(AIV_Collision::FCollisionInfo CollisionInfo);
     //virtual void OnCollisionExit();
 
     //=======Setter=======

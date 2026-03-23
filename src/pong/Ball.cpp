@@ -1,7 +1,7 @@
 #include "pong/Ball.h"
 #include "pong/PongGame.h"
 #include "utility/ColorUtility.h"
-
+#include <iostream>
 void Ball::Start()
 {
     float GetRandX = (float)GetRandomValue(-100,100);
@@ -44,6 +44,12 @@ void Ball::ChangeColor()
 
 void Ball::Draw()
 {
-    DrawCircle(position.x, position.y, radius,ObjColor);
+    DrawCircle(position.x+pivotOffset.x, position.y +pivotOffset.y, radius,ObjColor);
+    DrawCircleLines(collider->position.x , collider->position.y, radius, GREEN);
 }
 
+
+void Ball::OnCollisionEnter(AIV_Collision::FCollisionInfo CollisionInfo){
+    velocity.x = -velocity.x;
+    std::cout<< CollisionInfo.dx<<","<<CollisionInfo.dy<<std::endl;
+}

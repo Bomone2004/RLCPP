@@ -7,7 +7,7 @@ void GameObject::SetPosition(const FVector2& newPos){
     position = newPos;
     if(GetCollider())
     {
-        collider->position = newPos;
+        collider->position = newPos + collider->offset;
     
     }
 }
@@ -20,7 +20,7 @@ void GameObject::SetActive(bool newState){
     active = newState;
 }
 
-void GameObject::OnCollisionEnter()
+void GameObject::OnCollisionEnter(AIV_Collision::FCollisionInfo CollisionInfo)
 {
     TraceLog(LOG_WARNING,"Collision");
 

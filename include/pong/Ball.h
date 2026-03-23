@@ -13,6 +13,7 @@ public:
         collider = std::make_shared<AIV_Collision::CircleCollider>(radius);
         collider->position = position;
 
+
     }
     ~Ball(){}
 
@@ -20,6 +21,7 @@ public:
     virtual void Update(float DeltaTime) override; 
     virtual void Draw() override;
 
+    virtual void OnCollisionEnter(AIV_Collision::FCollisionInfo CollisionInfo) override;
 protected:
     void ChangeColor();
 };

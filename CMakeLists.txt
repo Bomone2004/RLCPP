@@ -28,6 +28,7 @@ src/pong/PongGame.cpp
 src/pong/Ball.cpp
 src/pong/Paddle.cpp
 src/core/CollisionManager.cpp
+src/core/Collider.cpp
 )
 
 
