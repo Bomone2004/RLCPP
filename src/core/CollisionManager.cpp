@@ -46,14 +46,38 @@ void CollisionManager::Update()
     // Il tipo di dato contenuto dal vector e` QUALCOSA: 
     // - deve avere info sui due gameobject 
     // - devo avere un modo per compararla con una coppia di gameobject
-    
+    // questa cosa(oggetto A) == questa altra cosa (sempre su oggetto A)?
+
+    // confrontare due shared pointer
+    // come confronto due WEAK pointer
+
+    /*
+    struct FCollisionPair{
+
+        std::weak_ptr<GameObject> A
+        std::weak_ptr<GameObject> B
+
+        //costruttore
+        FCollisionPair(qualcosa A, qualcosa B) : A(A), B(B) {}
+
+        // operatore == 
+        bool operator==(const FCollisionPair& other ) const
+        { 
+            ---
+            Se le due coppie di collisione sono uguali => true
+        }
+
+    }
+ */ 
+
     for(int i = 0; i < gameobj.size(); ++i)
     {
+        auto objA = gameobj.at(i).lock();
+        //TODO: dobbiamo """""fermarci""""" se lock fallisce
         for(int j = i + 1; j < gameobj.size(); ++j)
         {
-            auto objA = gameobj.at(i).lock();
             auto objB = gameobj.at(j).lock();
-            
+            //TODO: dobbiamo """""fermarci""""" se lock fallisce
             AIV_Collision::FCollisionInfo cInfo;
             if(CheckForCollisionPair(objA.get()->GetCollider(), objB.get()->GetCollider(),cInfo))
             {
