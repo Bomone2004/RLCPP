@@ -4,7 +4,8 @@
 
 void Paddle::Start()
 {
-
+    Up = (playerIndex==0)?Action::MOVE_UP:Action::MOVE_UP_P2;
+    Down= (playerIndex==0)?Action::MOVE_DOWN:Action::MOVE_DOWN_P2;
 }
 
 void Paddle::Update(float deltatime)
@@ -14,12 +15,12 @@ void Paddle::Update(float deltatime)
     const InputManager* inputManager = dynamic_cast<PongGame*>(game)->GetInputManager();
 
     velocity = {0, 0};
-    
-    if (inputManager->GetActionState(Action::MOVE_UP) && GetPosition().y - Bounds.y/2  > 0)
+
+    if (inputManager->GetActionState(Up) && GetPosition().y - Bounds.y/2  > 0)
     {
         velocity.y = -1;
     }
-    else if (inputManager->GetActionState(Action::MOVE_DOWN) && GetPosition().y + Bounds.y/2 < GetScreenHeight())
+    else if (inputManager->GetActionState(Down) && GetPosition().y + Bounds.y/2 < GetScreenHeight())
     {
         velocity.y = 1;
     }

@@ -12,7 +12,13 @@ void PongGame::InitGame()
     inputManager->BindKey(Action::MOVE_DOWN, KEY_S);
     inputManager->BindKey(Action::MOVE_RIGHT, KEY_D);
     inputManager->BindKey(Action::MOVE_LEFT, KEY_A);
+    
+    inputManager->BindKey(Action::MOVE_UP_P2, KEY_UP);
+    inputManager->BindKey(Action::MOVE_DOWN_P2, KEY_DOWN);
+    inputManager->BindKey(Action::MOVE_RIGHT_P2, KEY_RIGHT);
+    inputManager->BindKey(Action::MOVE_LEFT_P2, KEY_LEFT);
 
+    
     Game::InitGame();
 }
 

@@ -55,11 +55,14 @@ void Ball::OnCollisionEnter(AIV_Collision::FCollisionInfo CollisionInfo){
     if(CollisionInfo.Overlap.x< CollisionInfo.Overlap.y)
     {
         velocity.x =- velocity.x;
+        velocity.y *= 1.1;
     }
     else
     {
         velocity.y = -velocity.y;
 
     }
-
+    if(speed < 500){
+        speed *= 1.2;
+    }
 }
