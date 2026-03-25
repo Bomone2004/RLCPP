@@ -64,4 +64,8 @@ FVector2 Game::GetScreenSize() const
 {
     return ScreenSize;
 }
+FVector2 Game::GetScreenCenter() const
+{
+    return ScreenSize*0.5f;
+}
 

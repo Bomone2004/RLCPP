@@ -4,17 +4,9 @@
 #include <iostream>
 void Ball::Start()
 {
-    float GetRandX = (float)GetRandomValue(-100,100);
-    float GetRandY = (float)GetRandomValue(-10,10);
 
-    if(GetRandX == 0)
-    {
-        GetRandX = 1;
-    }
+    ResetBall();
 
-    velocity = {GetRandX,GetRandY};
-
-    velocity = velocity.Nomalized();
 }
 
 
@@ -27,14 +19,31 @@ void Ball::Update(float DeltaTime)
         velocity.y *= -1.1;
         ChangeColor();
     }
-
-    if (GetPosition().x + radius > GetScreenWidth() || GetPosition().x - radius < 0)
-    {
+    bool scored = false ; 
+    int scorePlayer; 
+    if (GetPosition().x + radius > GetScreenWidth()){
         velocity.x *= -1.1;
         ChangeColor();
+
+        //punto per P1 
+        scored = true;
+        scorePlayer = 0;
+        
+    } else if ( GetPosition().x - radius < 0)
+    {
+        velocity.x *= -1.1;
+        
+        //punto per P2
+        scored = true;
+        scorePlayer = 1;
     }
     
-    SetPosition(position + velocity.Nomalized() * speed * DeltaTime);
+    if(scored){
+        dynamic_cast<PongGame*>(game)->ScorePoints(scorePlayer);
+        ResetBall();
+    }
+    
+    SetPosition(position + velocity.Nomalized() * currentSpeed * DeltaTime);
 }
 
 void Ball::ChangeColor()
@@ -42,6 +51,22 @@ void Ball::ChangeColor()
     ObjColor = Aiv_Color::GetRandomColor();
 }
 
+void Ball::ResetBall()
+{
+    SetPosition(game->GetScreenCenter());
+    currentSpeed = speed;
+    float GetRandX = (float)GetRandomValue(-100,100);
+    float GetRandY = (float)GetRandomValue(-10,10);
+
+    if(GetRandX == 0)
+    {
+        GetRandX = 1;
+    }
+
+    velocity = {GetRandX,GetRandY};
+
+    velocity = velocity.Nomalized();
+}
 void Ball::Draw()
 {
     GameObject::Draw();
@@ -62,7 +87,7 @@ void Ball::OnCollisionEnter(AIV_Collision::FCollisionInfo CollisionInfo){
         velocity.y = -velocity.y;
 
     }
-    if(speed < 500){
-        speed *= 1.2;
+    if(currentSpeed < 500){
+        currentSpeed *= 1.2;
     }
 }

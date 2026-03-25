@@ -11,7 +11,6 @@ protected:
     FVector2 position;
     FVector2 velocity;
     FVector2 pivotOffset;
-    //float radius; // TODO: Togliere raggio di collisione e spostarlo in classe a parte (o figlia o altro)
     bool active;
     float speed;    
 

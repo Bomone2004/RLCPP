@@ -51,4 +51,6 @@ class Game
 
     public:
     FVector2 GetScreenSize() const;
+        
+    FVector2 GetScreenCenter()const; 
 };

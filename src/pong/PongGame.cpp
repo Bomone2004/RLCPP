@@ -1,5 +1,6 @@
 #include "pong/PongGame.h"
 
+
 const InputManager* PongGame::GetInputManager() const
 {
     return inputManager.get();
@@ -18,7 +19,8 @@ void PongGame::InitGame()
     inputManager->BindKey(Action::MOVE_RIGHT_P2, KEY_RIGHT);
     inputManager->BindKey(Action::MOVE_LEFT_P2, KEY_LEFT);
 
-    
+    P1Points = 0;
+    P2Points = 0;
     Game::InitGame();
 }
 
@@ -30,5 +32,18 @@ void PongGame::Update(float DeltaTime)
 void PongGame::Draw(){
 
     Game::Draw();
-
 }
+int PongGame::GetPoints(int playerIndex) const { 
+    return (playerIndex==0)?P1Points:P2Points;
+}
+
+void PongGame::ScorePoints(int playerIndex)
+{
+    if(playerIndex == 0){
+        P1Points++;
+    }
+    else{
+        P2Points++;
+    }
+}
+
