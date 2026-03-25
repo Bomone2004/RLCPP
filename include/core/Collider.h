@@ -6,6 +6,8 @@ namespace AIV_Collision{
    struct FCollisionInfo{
        // std::weak_ptr<GameObject> other;
         FVector2 Overlap;
+
+        FCollisionInfo(): Overlap(0,0){}
     };
 
     struct Collider 

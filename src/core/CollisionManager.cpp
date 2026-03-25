@@ -30,98 +30,53 @@ void CollisionManager::UnregisterCollider(std::shared_ptr<GameObject> GameObject
 
 void CollisionManager::Update()
 {
-    // 3 oggetti 
-    // 3 oggetti che collidono contemporaneamente 
-    // A -collide-> B e C -collide-> B 
-    // A smette di collidere con B , ma C continua a collidere con B
-    // A sta collidendo con B -> MA B non sta collidendo con C
 
-    // Il fulcro del problema e` che noi stiamo gestendo le collisioni basandoci su un singolo booleano 
-    // quando in realta` dovremmo gestire questo sistema su collision pair
-
-    // std::vector<> collisionPair
-    // quando collidono aggiung questa coppia di oggetti al vector
-    // quando la collisione tra i due fallisce li tolgo 
-    // se quando controllo la collisione trovo la coppia nel vector, invece dell'oncollision enter chiamo lo stay
-    // Il tipo di dato contenuto dal vector e` QUALCOSA: 
-    // - deve avere info sui due gameobject 
-    // - devo avere un modo per compararla con una coppia di gameobject
-    // questa cosa(oggetto A) == questa altra cosa (sempre su oggetto A)?
-
-    // confrontare due shared pointer
-    // come confronto due WEAK pointer
-
-    /*
-    struct FCollisionPair{
-
-        std::weak_ptr<GameObject> A
-        std::weak_ptr<GameObject> B
-
-        //costruttore
-        FCollisionPair(qualcosa A, qualcosa B) : A(A), B(B) {}
-
-        // operatore == 
-        bool operator==(const FCollisionPair& other ) const
-        { 
-            ---
-            Se le due coppie di collisione sono uguali => true
-        }
-
-    }
- */ 
+    previousCollisions = currentCollisions; 
+    currentCollisions.clear();
 
     for(int i = 0; i < gameobj.size(); ++i)
     {
         auto objA = gameobj.at(i).lock();
-        //TODO: dobbiamo """""fermarci""""" se lock fallisce
+        if(!objA) continue; 
         for(int j = i + 1; j < gameobj.size(); ++j)
         {
             auto objB = gameobj.at(j).lock();
-            //TODO: dobbiamo """""fermarci""""" se lock fallisce
+            if(!objB) continue; 
             AIV_Collision::FCollisionInfo cInfo;
             if(CheckForCollisionPair(objA.get()->GetCollider(), objB.get()->GetCollider(),cInfo))
             {
+                currentCollisions.emplace_back(objA, objB);
+                
                 
                 AIV_Collision::FCollisionInfo cInfoA;
                 AIV_Collision::FCollisionInfo cInfoB;
                 cInfoA.Overlap = cInfo.Overlap;
                 cInfoB.Overlap = cInfo.Overlap;
 
-
-                //collision detected
-                if(!objA->GetCollider()->isColliding)
-                {
+                if(!HasCollisionPair(previousCollisions, objA, objB)){
                     objA->OnCollisionEnter(cInfoA);
-                }
-                else{
-                    objA->OnCollisionStay(cInfoA);
-                }
-                if(!objB->GetCollider()->isColliding)
-                {
                     objB->OnCollisionEnter(cInfoB);
                 }
                 else{
+                    objA->OnCollisionStay(cInfoA);
                     objA->OnCollisionStay(cInfoB);
                 }
+            }  
+        }
+    }
 
-                objA->GetCollider()->isColliding = true;
-                objB->GetCollider()->isColliding = true;
+    for(const auto& prevPair : previousCollisions)
+    {
+        if(!HasCollisionPair(currentCollisions, prevPair.ObjectA.lock(), prevPair.ObjectB.lock()))
+        {
+            auto objA = prevPair.ObjectA.lock();
+            auto objB = prevPair.ObjectB.lock();
 
+            if(objA && objB){
+                AIV_Collision::FCollisionInfo empty; 
+                objA->OnCollisionExit(empty);
+                objB->OnCollisionExit(empty);
 
-
-            }
-            else
-            {
-                if(objA->GetCollider()->isColliding)
-                {
-                    objA->OnCollisionExit(cInfo);
-                }
-                if(objB->GetCollider()->isColliding)
-                {
-                    objB->OnCollisionExit(cInfo);
-                }
-                objA->GetCollider()->isColliding = false;
-                objB->GetCollider()->isColliding = false;
             }
         }
     }
@@ -159,4 +114,23 @@ bool CollisionManager::CheckForCollisionPair(const AIV_Collision::Collider* a, c
     }
 
     return false;
+}
+
+bool CollisionManager::HasCollisionPair(const std::vector<FCollisionPair> &pairs, std::shared_ptr<GameObject> A, std::shared_ptr<GameObject> B)
+{
+    if(!A|| !B) return false; 
+
+    FCollisionPair searchPair(A, B);
+    return std::find(pairs.begin(), pairs.end(), searchPair)!= pairs.end();
+}
+bool FCollisionPair::operator==(const FCollisionPair &other) const
+{
+    auto a1  = ObjectA.lock();
+    auto a2 = other.ObjectA.lock();
+    auto b1 = ObjectB.lock();
+    auto b2  = other.ObjectB.lock();
+
+    if(!a1 ||!a2 ||!b1 ||!b2) return false;
+
+    return (a1 == a2 && b1 == b2)|| (a1 == b2 && b1 == a2);
 }

@@ -15,7 +15,9 @@ public:
         //Creare i nostri Gameobject;
 
         GameObjects.push_back(std::make_unique<Ball>(this, FVector2{33,33}, 15, RAYWHITE,200));
-        GameObjects.push_back(std::make_unique<Paddle>(this,FVector2{ 100, 100}, RAYWHITE, 150, FVector2{30, 120}));
+        GameObjects.push_back(std::make_unique<Paddle>(this,FVector2{ 100, 100}, BLUE , 150, FVector2{30, 120}));
+        //Player 2, controllato con le freccine (oppure I e K )
+        GameObjects.push_back(std::make_unique<Paddle>(this,FVector2{ ScreenSize.x - 100, 100}, ORANGE , 150, FVector2{30, 120}));
     }
 
     const InputManager* GetInputManager() const;
