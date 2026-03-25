@@ -30,11 +30,23 @@ void CollisionManager::UnregisterCollider(std::shared_ptr<GameObject> GameObject
 
 void CollisionManager::Update()
 {
-    /* 
-    ogni collider comparare con un altro collider,
-    ma senza fare comparazioni innutili,
-    a comparare b e c, b solo con c, perche con a ho gia comparato, c con niente perche gia fatto
-    */
+    // 3 oggetti 
+    // 3 oggetti che collidono contemporaneamente 
+    // A -collide-> B e C -collide-> B 
+    // A smette di collidere con B , ma C continua a collidere con B
+    // A sta collidendo con B -> MA B non sta collidendo con C
+
+    // Il fulcro del problema e` che noi stiamo gestendo le collisioni basandoci su un singolo booleano 
+    // quando in realta` dovremmo gestire questo sistema su collision pair
+
+    // std::vector<> collisionPair
+    // quando collidono aggiung questa coppia di oggetti al vector
+    // quando la collisione tra i due fallisce li tolgo 
+    // se quando controllo la collisione trovo la coppia nel vector, invece dell'oncollision enter chiamo lo stay
+    // Il tipo di dato contenuto dal vector e` QUALCOSA: 
+    // - deve avere info sui due gameobject 
+    // - devo avere un modo per compararla con una coppia di gameobject
+    
     for(int i = 0; i < gameobj.size(); ++i)
     {
         for(int j = i + 1; j < gameobj.size(); ++j)
@@ -71,27 +83,6 @@ void CollisionManager::Update()
                 objA->GetCollider()->isColliding = true;
                 objB->GetCollider()->isColliding = true;
 
-                /* TODO 18/03 
-
-                    1- Mandare delle informazioni:
-                        struct CollisionInfo
-                        popolata nel CheckForCollisionPair
-                            - oggetto A 
-                            - oggetto B 
-                            Avanzata: 
-                                punto di collisione
-
-                    2- On collision enter va chiamata una volta sola.
-                        Aggiungere on collision exit
-                        Aggiungere On collision stay
-                        E gestire queste chiamate
-
-                        per testare questo fatelo con i colori
-                            -> enter: rossa
-                            -> stay: blu
-                            -> exit: bianca
-
-                */
 
 
             }

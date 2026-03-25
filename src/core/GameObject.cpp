@@ -22,20 +22,18 @@ void GameObject::SetActive(bool newState){
 
 void GameObject::OnCollisionEnter(AIV_Collision::FCollisionInfo CollisionInfo)
 {
-    if(collider->shouldDrawDebug){
+    if(collider.get() != nullptr && collider->shouldDrawDebug){
         TraceLog(LOG_WARNING,"Collision Enter");
     }
-
-
 }
 void GameObject::OnCollisionExit(AIV_Collision::FCollisionInfo CollisionInfo){
-    if(collider->shouldDrawDebug){
+    if(collider.get() != nullptr && collider->shouldDrawDebug){
         TraceLog(LOG_WARNING,"Collision Exit");
     }
 }
 void GameObject::OnCollisionStay(AIV_Collision::FCollisionInfo CollisionInfo)
 {
-    if(collider->shouldDrawDebug){
+    if(collider.get() != nullptr && collider->shouldDrawDebug){
         TraceLog(LOG_WARNING,"Collision Stay");
     }
 }
