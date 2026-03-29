@@ -35,7 +35,7 @@ public:
 
     void ScorePoints(int playerIndex);
     //SCORE DELEGTATE PART
-    using ScoreDelegate= std::function<void(int leftScore, int rightScore)>;
+    using ScoreDelegate= std::function<void(int leftScore, int rightScore)>;//  eventually nned an array of scoreDelegate(?)
     void SetScoreDelegate(ScoreDelegate delegate);
 private:
     //SCORE DELEGTATE PART

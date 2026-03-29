@@ -5,9 +5,6 @@ void ScoreUI::Start()
 {
 
     PongGame* pG = dynamic_cast<PongGame*>(game);
-    if (!pG)
-        return;
-
     pG->SetScoreDelegate([this](int leftScore, int rightScore)
     {
         scoreLeft = leftScore;
@@ -19,6 +16,7 @@ void ScoreUI::Start()
 }
 void ScoreUI::Update(float DeltaTime)
 {
+    //MOVED IN START PART DEFINITION
     //PongGame* pG = dynamic_cast<PongGame*>(game);
     //scoreLeft = pG->GetPoints(0);
     //scoreRight = pG->GetPoints(1);
