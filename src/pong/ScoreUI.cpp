@@ -4,18 +4,28 @@
 void ScoreUI::Start()
 {
 
+    PongGame* pG = dynamic_cast<PongGame*>(game);
+    if (!pG)
+        return;
+
+    pG->SetScoreDelegate([this](int leftScore, int rightScore)
+    {
+        scoreLeft = leftScore;
+        scoreRight = rightScore;
+    });
+
+    scoreLeft = pG->GetPoints(0);
+    scoreRight = pG->GetPoints(1);
 }
 void ScoreUI::Update(float DeltaTime)
 {
-    PongGame* pG = dynamic_cast<PongGame*>(game);
-    scoreLeft = pG->GetPoints(0);
-    scoreRight = pG->GetPoints(1);
+    //PongGame* pG = dynamic_cast<PongGame*>(game);
+    //scoreLeft = pG->GetPoints(0);
+    //scoreRight = pG->GetPoints(1);
     // TODO 
     // QUESTA COSA QUI NON CI PIACE
     // a noi servirebbe qualcosa che legge l'aggiornamento della ui 
     // in sostanza ci servirebbe un delegate chiamato quando viene aggiornato il punteggio 
-
-
 }
 
 void ScoreUI::Draw()

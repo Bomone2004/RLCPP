@@ -45,5 +45,19 @@ void PongGame::ScorePoints(int playerIndex)
     else{
         P2Points++;
     }
+    NotifyScoreChanged();
 }
 
+//SCORE DELEGTATE PART
+void PongGame::SetScoreDelegate(ScoreDelegate delegate)
+{
+    onScoreChanged = std::move(delegate);
+}
+
+void PongGame::NotifyScoreChanged()
+{
+    if (onScoreChanged)
+    {
+        onScoreChanged(P1Points, P2Points);
+    }
+}

@@ -55,7 +55,7 @@ void Ball::ResetBall()
 {
     SetPosition(game->GetScreenCenter());
     currentSpeed = speed;
-    float GetRandX = (float)GetRandomValue(-100,100);
+    float GetRandX = (float)GetRandomValue(-10,10)*10;
     float GetRandY = (float)GetRandomValue(-10,10);
 
     if(GetRandX == 0)
