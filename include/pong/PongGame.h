@@ -28,7 +28,6 @@ public:
     const InputManager* GetInputManager() const;
 
     virtual void InitGame() override;
-
     virtual void Update(float DeltaTime) override;
     virtual void Draw() override;
 
@@ -36,7 +35,7 @@ public:
 
     void ScorePoints(int playerIndex);
     //SCORE DELEGTATE PART
-    using ScoreDelegate = std::function<void(int leftScore, int rightScore)>;
+    using ScoreDelegate= std::function<void(int leftScore, int rightScore)>;
     void SetScoreDelegate(ScoreDelegate delegate);
 private:
     //SCORE DELEGTATE PART
