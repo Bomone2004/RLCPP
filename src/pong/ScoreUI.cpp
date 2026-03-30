@@ -4,21 +4,18 @@
 void ScoreUI::Start()
 {
     PongGame* pG = dynamic_cast<PongGame*>(game);
-    pG->ScoreChangeDelegate = [this](int leftS, int rightS)
+    if(pG)
     {
-        this->UpdateScore(leftS, rightS);
-    };
+        pG->ScoreChangeDelegate = [this](int leftS, int rightS)
+        {
+            this->UpdateScore(leftS, rightS);
+        };
+        //cpp 11 version 
+        //pG->ScoreChangeDelegate = std::bind(&ScoreUI::UpdateScore, this, std::placeholders::_1, std::placeholders::_2);
+    }
 }
 void ScoreUI::Update(float DeltaTime)
 {
-    // PongGame* pG = dynamic_cast<PongGame*>(game);
-    // scoreLeft = pG->GetPoints(0);
-    // scoreRight = pG->GetPoints(1);
-    // TODO 
-    // QUESTA COSA QUI NON CI PIACE
-    // a noi servirebbe qualcosa che legge l'aggiornamento della ui 
-    // in sostanza ci servirebbe un delegate chiamato quando viene aggiornato il punteggio 
-
 
 }
 

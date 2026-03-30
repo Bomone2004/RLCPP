@@ -46,6 +46,12 @@ void PongGame::ScorePoints(int playerIndex)
         P2Points++;
     }
 
+    // Se uno dei due giocatori arriva a 5
+    // il gioco finisce. 
+    // per ora fatelo semplicemente uscire dal loop di update
+    // liberi di usare delegate, Ma volendo potete anche non usarli 
+
+    
     if(ScoreChangeDelegate)
     {
         ScoreChangeDelegate(P1Points, P2Points);
