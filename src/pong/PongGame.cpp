@@ -1,6 +1,7 @@
 #include "pong/PongGame.h"
 
 
+
 const InputManager* PongGame::GetInputManager() const
 {
     return inputManager.get();
@@ -26,12 +27,30 @@ void PongGame::InitGame()
 
 void PongGame::Update(float DeltaTime)
 {
-    Game::Update(DeltaTime);
+    if(endingGame){
+        countDown-=DeltaTime;
+        if(0>=countDown){
+            shouldClose=true;
+        }
+    }else{
+        Game::Update(DeltaTime);
+    }
+    
 }
 
 void PongGame::Draw(){
-
-    Game::Draw();
+    
+    
+    
+    if(endingGame){
+        BeginDrawing();
+        ClearBackground(clearColor);
+        DrawText( "Winner:", ScreenSize.x *0.5f + 10 ,ScreenSize.y *0.5f +40,50, RAYWHITE);
+        DrawText((P1Points>P2Points)?"Player1":"Player2",ScreenSize.x *0.5f + 10,ScreenSize.y *0.5f +70,50, RAYWHITE);
+        EndDrawing();
+    }else{
+        Game::Draw();
+    }
 }
 int PongGame::GetPoints(int playerIndex) const { 
     return (playerIndex==0)?P1Points:P2Points;
@@ -45,7 +64,13 @@ void PongGame::ScorePoints(int playerIndex)
     else{
         P2Points++;
     }
+    
+
     NotifyScoreChanged();
+
+    if(P1Points >= 5 || P2Points >= 5 ){
+        NotifyGameEnd();
+    }
 }
 
 //SCORE DELEGTATE PART
@@ -54,6 +79,15 @@ void PongGame::SetScoreDelegate(ScoreDelegate delegate)
     onScoreChanged = std::move(delegate);
 }
 
+void PongGame::NotifyGameEnd(){
+    endingGame=true;
+    countDown=5.f;
+    /*shouldClose=true;
+    if (onScoreEnd)
+    {
+        onScoreEnd();
+    }*/
+}
 void PongGame::NotifyScoreChanged()
 {
     if (onScoreChanged)

@@ -7,10 +7,11 @@ void ScoreUI::Start()
     PongGame* pG = dynamic_cast<PongGame*>(game);
     pG->SetScoreDelegate([this](int leftScore, int rightScore)
     {
-        scoreLeft = leftScore;
-        scoreRight = rightScore;
+        this->scoreLeft = leftScore;
+        this->scoreRight = rightScore;
     });
 
+    //first time
     scoreLeft = pG->GetPoints(0);
     scoreRight = pG->GetPoints(1);
 }
