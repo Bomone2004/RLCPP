@@ -45,5 +45,11 @@ void PongGame::ScorePoints(int playerIndex)
     else{
         P2Points++;
     }
+
+    if(ScoreChangeDelegate)
+    {
+        ScoreChangeDelegate(P1Points, P2Points);
+    }
+
 }
 

@@ -3,12 +3,16 @@
 #include "pong/Ball.h"
 #include "pong/Paddle.h"
 #include "pong/ScoreUI.h"
+#include <functional>
 
 class PongGame: public Game
 {
 
     int P1Points;
     int P2Points;
+
+public:
+    std::function<void(int, int)> ScoreChangeDelegate; 
 
 public:
     PongGame(FVector2 screenSize):Game(screenSize, "Pong")

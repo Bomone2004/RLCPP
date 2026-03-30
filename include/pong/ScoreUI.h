@@ -12,5 +12,7 @@ public:
     virtual void Start() override;
     virtual void Update(float DeltaTime) override;
     virtual void Draw() override; 
+
+    void UpdateScore(int leftScore, int rightScore);
     
 };
