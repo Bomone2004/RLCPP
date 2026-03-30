@@ -73,7 +73,7 @@ void PongGame::ScorePoints(int playerIndex)
     }
 }
 
-//SCORE DELEGTATE PART
+//SCORE DELEGATE PART
 void PongGame::SetScoreDelegate(ScoreDelegate delegate)
 {
     onScoreChanged = std::move(delegate);
