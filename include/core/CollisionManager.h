@@ -26,6 +26,8 @@ public:
 
     void UnregisterCollider(std::shared_ptr<GameObject> GameObject);
 
+    void Clear();
+
     void Update();
     
 private:

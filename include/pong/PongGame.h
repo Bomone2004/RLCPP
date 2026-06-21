@@ -1,37 +1,55 @@
-#pragma once 
+#pragma once
 #include "core/Game.h"
 #include "pong/Ball.h"
 #include "pong/Paddle.h"
 #include "pong/ScoreUI.h"
 #include <functional>
 
+enum class GameState
+{
+    Menu,
+    Game,
+    Victory
+};
+
+enum class GameMode
+{
+    TwoPlayers,
+    OnePlayerVsCPU
+};
+
 class PongGame: public Game
 {
 
     int P1Points;
     int P2Points;
-    bool endingGame;
-    float countDown;
+    const int winScore = 5;
+
+    GameState currentState;
+    GameMode mode;
+    int menuSelection;
+    int victorySelection;
+
+    Ball* ball;
 
 public:
-    std::function<void(int, int)> ScoreChangeDelegate; 
+    std::function<void(int, int)> ScoreChangeDelegate;
 
 public:
     PongGame(FVector2 screenSize):Game(screenSize, "Pong")
     {
-        countDown=5.f;
-        endingGame=false;
-        //Creare i nostri Gameobject;      
-        GameObjects.push_back(std::make_unique<Ball>(this, FVector2{33,33}, 15, RAYWHITE,200));
-        GameObjects.push_back(std::make_unique<Paddle>(this,FVector2{ 100, 100}, BLUE , 150, FVector2{30, 120}));
-        //Player 2, controllato con le freccine (oppure I e K )
-        GameObjects.push_back(std::make_unique<Paddle>(this,FVector2{ ScreenSize.x - 100, 100}, ORANGE , 150, FVector2{30, 120},1)); 
-        GameObjects.push_back(std::make_unique<ScoreUI>(this,FVector2{ screenSize.x/2, 10} ));
-   
+        P1Points = 0;
+        P2Points = 0;
+        currentState = GameState::Menu;
+        mode = GameMode::TwoPlayers;
+        menuSelection = 0;
+        victorySelection = 0;
+        ball = nullptr;
     }
-   
+
 
     const InputManager* GetInputManager() const;
+    FVector2 GetBallPosition() const;
 
     virtual void InitGame() override;
     virtual void Update(float DeltaTime) override;
@@ -40,13 +58,20 @@ public:
     int GetPoints(int playerIndex) const;
 
     void ScorePoints(int playerIndex);
-    //SCORE DELEGTATE PART
-    using ScoreDelegate= std::function<void(int leftScore, int rightScore)>;//  eventually nned an array of scoreDelegate(?)
+
+    using ScoreDelegate= std::function<void(int leftScore, int rightScore)>;
     using GameOverDelegate = std::function<void()>;
     void SetScoreDelegate(ScoreDelegate delegate);
 private:
+    void StartMatch();
+    void ResetMatch();
+
+    void UpdateMenu();
+    void UpdateVictory();
+    void DrawMenu();
+    void DrawVictory();
+
     void NotifyGameEnd();
-    // SCORE DELEGTATE PART
     void NotifyScoreChanged();
     ScoreDelegate onScoreChanged;
     GameOverDelegate onGameEnd;

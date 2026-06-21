@@ -1,12 +1,11 @@
 #include "pong/Ball.h"
 #include "pong/PongGame.h"
 #include "utility/ColorUtility.h"
-#include <iostream>
+
 void Ball::Start()
 {
-
     ResetBall();
-
+    GameObject::Start();
 }
 
 
@@ -14,36 +13,35 @@ void Ball::Update(float DeltaTime)
 {
     if (!game) return;
 
-    if (GetPosition().y - radius < 0 || GetPosition().y + radius > GetScreenHeight())
+    if (GetPosition().y - radius < 0 || GetPosition().y + radius > game->GetScreenSize().y)
     {
         velocity.y *= -1.1;
         ChangeColor();
     }
-    bool scored = false ; 
-    int scorePlayer; 
-    if (GetPosition().x + radius > GetScreenWidth()){
+    bool scored = false ;
+    int scorePlayer;
+    if (GetPosition().x + radius > game->GetScreenSize().x){
         velocity.x *= -1.1;
         ChangeColor();
 
-        //punto per P1 
         scored = true;
         scorePlayer = 0;
-        
+
     } else if ( GetPosition().x - radius < 0)
     {
         velocity.x *= -1.1;
-        
-        //punto per P2
+
         scored = true;
         scorePlayer = 1;
     }
-    
+
     if(scored){
         dynamic_cast<PongGame*>(game)->ScorePoints(scorePlayer);
         ResetBall();
     }
-    
+
     SetPosition(position + velocity.Nomalized() * currentSpeed * DeltaTime);
+    GameObject::Update(DeltaTime);
 }
 
 void Ball::ChangeColor()

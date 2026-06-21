@@ -1,14 +1,36 @@
 #include "raylib.h"
 #include "core/GameObject.h"
-#include<iostream>
-#include<stdio.h>
+#include "core/ColliderComponent.h"
+
+void GameObject::Start()
+{
+    for (auto& component : components)
+    {
+        component->Start();
+    }
+}
+
+void GameObject::Update(float deltaTime)
+{
+    for (auto& component : components)
+    {
+        component->Update(deltaTime);
+    }
+}
+
+void GameObject::Draw()
+{
+    for (auto& component : components)
+    {
+        component->Draw();
+    }
+}
 
 void GameObject::SetPosition(const FVector2& newPos){
     position = newPos;
-    if(GetCollider())
+    if (AIV_Collision::Collider* col = GetCollider())
     {
-        collider->position = newPos + collider->offset;
-    
+        col->position = newPos + col->offset;
     }
 }
 
@@ -22,18 +44,21 @@ void GameObject::SetActive(bool newState){
 
 void GameObject::OnCollisionEnter(AIV_Collision::FCollisionInfo CollisionInfo)
 {
-    if(collider.get() != nullptr && collider->shouldDrawDebug){
+    AIV_Collision::Collider* col = GetCollider();
+    if(col != nullptr && col->shouldDrawDebug){
         TraceLog(LOG_WARNING,"Collision Enter");
     }
 }
 void GameObject::OnCollisionExit(AIV_Collision::FCollisionInfo CollisionInfo){
-    if(collider.get() != nullptr && collider->shouldDrawDebug){
+    AIV_Collision::Collider* col = GetCollider();
+    if(col != nullptr && col->shouldDrawDebug){
         TraceLog(LOG_WARNING,"Collision Exit");
     }
 }
 void GameObject::OnCollisionStay(AIV_Collision::FCollisionInfo CollisionInfo)
 {
-    if(collider.get() != nullptr && collider->shouldDrawDebug){
+    AIV_Collision::Collider* col = GetCollider();
+    if(col != nullptr && col->shouldDrawDebug){
         TraceLog(LOG_WARNING,"Collision Stay");
     }
 }
@@ -46,7 +71,8 @@ FVector2 GameObject::GetVelocity() const{
 }
 AIV_Collision::Collider* GameObject::GetCollider() const
 {
-    return collider.get();
+    ColliderComponent* colliderComponent = GetComponent<ColliderComponent>();
+    return colliderComponent ? colliderComponent->GetCollider() : nullptr;
 }
 
 bool GameObject::IsActive()const{
@@ -55,8 +81,4 @@ bool GameObject::IsActive()const{
 
 void GameObject::Destroy(){
     active = false;
-}
-
-void GameObject::Draw(){
-    collider->DrawDebug();
 }

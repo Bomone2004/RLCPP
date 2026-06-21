@@ -28,6 +28,13 @@ void CollisionManager::UnregisterCollider(std::shared_ptr<GameObject> GameObject
     }
 }
 
+void CollisionManager::Clear()
+{
+    gameobj.clear();
+    currentCollisions.clear();
+    previousCollisions.clear();
+}
+
 void CollisionManager::Update()
 {
 
@@ -83,35 +90,33 @@ void CollisionManager::Update()
     
 }
 
+namespace
+{
+    template<typename A, typename B>
+    bool TryCollisionPair(const AIV_Collision::Collider* a, const AIV_Collision::Collider* b, AIV_Collision::FCollisionInfo& cInfo, bool& collided)
+    {
+        const A* castedA = dynamic_cast<const A*>(a);
+        const B* castedB = dynamic_cast<const B*>(b);
+
+        if (castedA && castedB)
+        {
+            collided = AIV_Collision::CheckCollision(*castedA, *castedB, cInfo);
+            return true;
+        }
+        return false;
+    }
+}
+
 bool CollisionManager::CheckForCollisionPair(const AIV_Collision::Collider* a, const AIV_Collision::Collider* b, AIV_Collision::FCollisionInfo& cInfo )
 {
-    //dynamic cast returns a valid ptr only IF conversion exists, otherwise nullptr
-    auto* rectA = dynamic_cast<const AIV_Collision :: RectCollider*>(a);
-    auto* rectB = dynamic_cast<const AIV_Collision :: RectCollider*>(b);
+    using namespace AIV_Collision;
 
-    if(rectA && rectB)
-    {
-        return AIV_Collision::CheckCollision(*rectA,*rectB, cInfo);
-    }
+    bool collided = false;
 
-
-    auto* circleA = dynamic_cast<const AIV_Collision :: CircleCollider*>(a);
-    auto* circleB = dynamic_cast<const AIV_Collision :: CircleCollider*>(b);
-
-    if(circleA && circleB)
-    {
-        return AIV_Collision::CheckCollision(*circleA,*circleB, cInfo);
-    }
-
-
-    if(rectA && circleB)
-    {
-        return AIV_Collision::CheckCollision(*rectA,*circleB, cInfo);
-    }
-    if(circleA && rectB)
-    {
-        return AIV_Collision::CheckCollision(*circleA,*rectB, cInfo);
-    }
+    if (TryCollisionPair<RectCollider, RectCollider>(a, b, cInfo, collided)) return collided;
+    if (TryCollisionPair<CircleCollider, CircleCollider>(a, b, cInfo, collided)) return collided;
+    if (TryCollisionPair<RectCollider, CircleCollider>(a, b, cInfo, collided)) return collided;
+    if (TryCollisionPair<CircleCollider, RectCollider>(a, b, cInfo, collided)) return collided;
 
     return false;
 }

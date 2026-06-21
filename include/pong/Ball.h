@@ -1,5 +1,6 @@
 #pragma once
 #include "core/GameObject.h"
+#include "core/ColliderComponent.h"
 #include "raylib.h"
 
 class Ball : public GameObject
@@ -11,16 +12,15 @@ class Ball : public GameObject
 public:
     Ball(Game* g, FVector2 Pos, float radius, Color c, float speed):GameObject(g, Pos,speed),ObjColor(c), radius(radius)
     {
-        collider = std::make_shared<AIV_Collision::CircleCollider>(radius);
-        collider->position = position;
-        collider->shouldDrawDebug = true;
-        collider->color = BLUE;
-        
+        ColliderComponent* colliderComponent = AddComponent<ColliderComponent>(std::make_shared<AIV_Collision::CircleCollider>(radius), FVector2{0, 0});
+        AIV_Collision::Collider* col = colliderComponent->GetCollider();
+        col->shouldDrawDebug = true;
+        col->color = BLUE;
     }
     ~Ball(){}
 
     virtual void Start() override;
-    virtual void Update(float DeltaTime) override; 
+    virtual void Update(float DeltaTime) override;
     virtual void Draw() override;
 
     virtual void OnCollisionEnter(AIV_Collision::FCollisionInfo CollisionInfo) override;

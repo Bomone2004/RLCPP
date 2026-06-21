@@ -14,7 +14,7 @@ FetchContent_Declare(
 
 set(BUILD_EXAMPLES OFF CACHE BOOL "Build Examples" FORCE)
 set(BUILD_GAMES OFF CACHE BOOL "Build Games" FORCE)
-set(OPENGL_VERSION "4.3" CACHE STRING "OpenGL version" FORCE)
+set(OPENGL_VERSION "3.3" CACHE STRING "OpenGL version" FORCE)
  
 FetchContent_MakeAvailable(raylib)
 
@@ -29,6 +29,7 @@ src/pong/Ball.cpp
 src/pong/Paddle.cpp
 src/core/CollisionManager.cpp
 src/core/Collider.cpp
+src/core/ColliderComponent.cpp
 src/pong/ScoreUI.cpp
 )
 

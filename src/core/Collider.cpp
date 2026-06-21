@@ -1,28 +1,38 @@
 #include "core/Collider.h"
+#include <cmath>
 namespace AIV_Collision{
 
 
         bool CheckCollision(const RectCollider& A , const RectCollider& B,FCollisionInfo& cInfo){
-            // AA BB Secca
-            bool overlap = A.position.x < B.position.x + B.extents.x && //rettangolo A e` a sinistra di B
+            bool overlap = A.position.x < B.position.x + B.extents.x &&
                             A.position.x + A.extents.x > B.position.x &&
                             A.position.y < B.position.y + B.extents.y &&
-                            A.position.y + A.extents.y> B.position.y;   
-            return overlap;
+                            A.position.y + A.extents.y> B.position.y;
 
-            //todo overlap calculation
-        }               
-        
-        
-        
+            if(overlap){
+                float overlapX = std::min(A.position.x + A.extents.x, B.position.x + B.extents.x) - std::max(A.position.x, B.position.x);
+                float overlapY = std::min(A.position.y + A.extents.y, B.position.y + B.extents.y) - std::max(A.position.y, B.position.y);
+                cInfo.Overlap = FVector2(overlapX, overlapY);
+            }
+
+            return overlap;
+        }
+
+
+
         bool CheckCollision(const CircleCollider& A, const CircleCollider& B,FCollisionInfo& cInfo){
+                float radii = A.radius + B.radius;
                 float distanceSqr = FVector2::SqrDistance(A.position, B.position);
-                return distanceSqr < (A.radius + B.radius)*(A.radius + B.radius);
-                /*
-                float distance = FVector2::Distance(A.position, B.position);
-                return distance < (A.radius + B.radius);
-                */
-                //todo overlap calculation
+                bool overlap = distanceSqr < radii*radii;
+
+                if(overlap){
+                    float distance = FVector2::Distance(A.position, B.position);
+                    float penetration = radii - distance;
+                    FVector2 direction = (distance > 0.0f) ? (B.position - A.position) * (1.0f/distance) : FVector2(1, 0);
+                    cInfo.Overlap = FVector2(std::abs(direction.x) * penetration, std::abs(direction.y) * penetration);
+                }
+
+                return overlap;
         }
 
 

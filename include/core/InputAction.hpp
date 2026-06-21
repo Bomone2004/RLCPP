@@ -10,5 +10,10 @@ enum class Action
     MOVE_DOWN_P2,
     MOVE_RIGHT_P2,
     MOVE_LEFT_P2,
+    TURBO,
+    TURBO_P2,
+    UI_UP,
+    UI_DOWN,
+    UI_CONFIRM,
     COUNT
 };
