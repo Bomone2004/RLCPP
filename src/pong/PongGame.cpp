@@ -32,7 +32,22 @@ void PongGame::InitGame()
     inputManager->BindKey(Action::UI_DOWN, KEY_DOWN);
     inputManager->BindKey(Action::UI_CONFIRM, KEY_ENTER);
 
+    inputManager->BindKey(Action::PAUSE, KEY_P);
+    inputManager->BindKey(Action::RESTART, KEY_R);
+
     currentState = GameState::Menu;
+}
+
+float PongGame::GetPaddleCenterY(bool leftSide) const
+{
+    Paddle* paddle = leftSide ? leftPaddle : rightPaddle;
+    return paddle ? paddle->GetPosition().y : GetScreenCenter().y;
+}
+
+float PongGame::GetPaddleHalfHeight(bool leftSide) const
+{
+    Paddle* paddle = leftSide ? leftPaddle : rightPaddle;
+    return paddle ? paddle->GetHalfHeight() : 60.0f;
 }
 
 void PongGame::StartMatch()
@@ -49,10 +64,10 @@ void PongGame::ResetMatch()
     P1Points = 0;
     P2Points = 0;
 
-    GameObjects.push_back(std::make_shared<Ball>(this, FVector2{33,33}, 15, RAYWHITE, 200));
-    GameObjects.push_back(std::make_shared<Paddle>(this, FVector2{100, 100}, BLUE, 150, FVector2{30, 120}));
+    GameObjects.push_back(std::make_shared<Ball>(this, FVector2{33,33}, 15, RAYWHITE, 350));
+    GameObjects.push_back(std::make_shared<Paddle>(this, FVector2{100, 100}, RAYWHITE, 320, FVector2{30, 120}));
 
-    auto paddleTwo = std::make_shared<Paddle>(this, FVector2{ScreenSize.x - 100, 100}, ORANGE, 150, FVector2{30, 120}, 1);
+    auto paddleTwo = std::make_shared<Paddle>(this, FVector2{ScreenSize.x - 100, 100}, RAYWHITE, 320, FVector2{30, 120}, 1);
     if (mode == GameMode::OnePlayerVsCPU)
     {
         paddleTwo->SetAI(true);
@@ -62,6 +77,8 @@ void PongGame::ResetMatch()
     GameObjects.push_back(std::make_shared<ScoreUI>(this, FVector2{ScreenSize.x/2, 10}));
 
     ball = dynamic_cast<Ball*>(GameObjects[0].get());
+    leftPaddle = dynamic_cast<Paddle*>(GameObjects[1].get());
+    rightPaddle = dynamic_cast<Paddle*>(GameObjects[2].get());
 
     Game::InitGame();
     NotifyScoreChanged();
@@ -83,7 +100,29 @@ void PongGame::Update(float DeltaTime)
         return;
     }
 
-    Game::Update(DeltaTime);
+    if (currentState == GameState::Pause)
+    {
+        inputManager->Update();
+        UpdatePause();
+        return;
+    }
+
+    inputManager->Update();
+
+    if (inputManager->GetActionDown(Action::PAUSE))
+    {
+        pauseSelection = 0;
+        currentState = GameState::Pause;
+        return;
+    }
+
+    if (inputManager->GetActionDown(Action::RESTART))
+    {
+        ResetMatch();
+        return;
+    }
+
+    UpdateWorld(DeltaTime);
 }
 
 void PongGame::UpdateMenu()
@@ -139,6 +178,50 @@ void PongGame::UpdateVictory()
     }
 }
 
+void PongGame::UpdatePause()
+{
+    if (inputManager->GetActionDown(Action::PAUSE))
+    {
+        currentState = GameState::Game;
+        return;
+    }
+
+    if (inputManager->GetActionDown(Action::RESTART))
+    {
+        ResetMatch();
+        currentState = GameState::Game;
+        return;
+    }
+
+    if (inputManager->GetActionDown(Action::UI_DOWN)) pauseSelection++;
+    if (inputManager->GetActionDown(Action::UI_UP)) pauseSelection--;
+
+    if (pauseSelection < 0) pauseSelection = 0;
+    if (pauseSelection > 3) pauseSelection = 3;
+
+    if (inputManager->GetActionDown(Action::UI_CONFIRM))
+    {
+        if (pauseSelection == 0)
+        {
+            currentState = GameState::Game;
+        }
+        else if (pauseSelection == 1)
+        {
+            ResetMatch();
+            currentState = GameState::Game;
+        }
+        else if (pauseSelection == 2)
+        {
+            menuSelection = 0;
+            currentState = GameState::Menu;
+        }
+        else
+        {
+            Quit();
+        }
+    }
+}
+
 void PongGame::Draw()
 {
     if (currentState == GameState::Menu)
@@ -153,7 +236,34 @@ void PongGame::Draw()
         return;
     }
 
+    if (currentState == GameState::Pause)
+    {
+        DrawPause();
+        return;
+    }
+
     Game::Draw();
+}
+
+void PongGame::DrawPause()
+{
+    BeginDrawing();
+    ClearBackground(clearColor);
+
+    const char* title = "PAUSED";
+    DrawText(title, ScreenSize.x*0.5f - MeasureText(title, 70)/2, ScreenSize.y*0.15f, 70, RAYWHITE);
+
+    const char* items[] = {"RESUME", "RESTART", "MENU", "QUIT"};
+    for (int i = 0; i < 4; ++i)
+    {
+        Color color = (i == pauseSelection) ? YELLOW : GRAY;
+        DrawText(items[i], ScreenSize.x*0.5f - MeasureText(items[i], 35)/2, ScreenSize.y*0.42f + i*55, 35, color);
+    }
+
+    const char* hint = "P to resume, R to restart";
+    DrawText(hint, ScreenSize.x*0.5f - MeasureText(hint, 20)/2, ScreenSize.y*0.9f, 20, DARKGRAY);
+
+    EndDrawing();
 }
 
 void PongGame::DrawMenu()

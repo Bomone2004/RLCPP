@@ -33,13 +33,17 @@ void Game::InitGame()
 void Game::Update(float DeltaTime)
 {
     inputManager->Update();
+    UpdateWorld(DeltaTime);
+}
+
+void Game::UpdateWorld(float DeltaTime)
+{
     for(auto& go : GameObjects)
-    {   
+    {
         if(!go->IsActive()) continue;
         go->Update(DeltaTime);
     }
     collisionManager->Update();
-    
 }
 
 void Game::Draw()

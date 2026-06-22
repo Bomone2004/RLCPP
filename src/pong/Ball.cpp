@@ -1,6 +1,7 @@
 #include "pong/Ball.h"
 #include "pong/PongGame.h"
 #include "utility/ColorUtility.h"
+#include <cmath>
 
 void Ball::Start()
 {
@@ -15,7 +16,7 @@ void Ball::Update(float DeltaTime)
 
     if (GetPosition().y - radius < 0 || GetPosition().y + radius > game->GetScreenSize().y)
     {
-        velocity.y *= -1.1;
+        velocity.y = -velocity.y;
         ChangeColor();
     }
     bool scored = false ;
@@ -75,17 +76,26 @@ void Ball::Draw()
 void Ball::OnCollisionEnter(AIV_Collision::FCollisionInfo CollisionInfo){
 
     GameObject::OnCollisionEnter(CollisionInfo);
-    if(CollisionInfo.Overlap.x< CollisionInfo.Overlap.y)
-    {
-        velocity.x =- velocity.x;
-        velocity.y *= 1.1;
-    }
-    else
-    {
-        velocity.y = -velocity.y;
 
-    }
-    if(currentSpeed < 500){
-        currentSpeed *= 1.2;
+    PongGame* pong = dynamic_cast<PongGame*>(game);
+    if (!pong) return;
+
+    bool leftSide = GetPosition().x < pong->GetScreenSize().x * 0.5f;
+    float paddleCenterY = pong->GetPaddleCenterY(leftSide);
+    float paddleHalfHeight = pong->GetPaddleHalfHeight(leftSide);
+
+    float offset = (GetPosition().y - paddleCenterY) / paddleHalfHeight;
+    if (offset < -1.0f) offset = -1.0f;
+    if (offset > 1.0f) offset = 1.0f;
+
+    float maxBounceAngle = PI / 3.0f;
+    float angle = offset * maxBounceAngle;
+    float directionX = leftSide ? 1.0f : -1.0f;
+
+    velocity = FVector2(directionX * std::cos(angle), std::sin(angle));
+    velocity = velocity.Nomalized();
+
+    if(currentSpeed < 750){
+        currentSpeed *= 1.1;
     }
 }

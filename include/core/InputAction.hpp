@@ -15,5 +15,7 @@ enum class Action
     UI_UP,
     UI_DOWN,
     UI_CONFIRM,
+    PAUSE,
+    RESTART,
     COUNT
 };

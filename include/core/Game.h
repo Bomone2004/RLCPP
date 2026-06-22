@@ -46,6 +46,7 @@ class Game
     virtual void InitGame();
     protected:
     virtual void Update(float DeltaTime);
+    void UpdateWorld(float DeltaTime);
     virtual void Draw();
     
 

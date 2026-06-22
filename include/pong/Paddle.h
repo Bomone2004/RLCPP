@@ -24,6 +24,7 @@ public:
     ~Paddle(){}
 
     void SetAI(bool enabled);
+    float GetHalfHeight() const { return Bounds.y / 2.0f; }
 
     virtual void Start() override;
     virtual void Update(float DeltaTime) override;

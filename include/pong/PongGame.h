@@ -9,6 +9,7 @@ enum class GameState
 {
     Menu,
     Game,
+    Pause,
     Victory
 };
 
@@ -29,8 +30,11 @@ class PongGame: public Game
     GameMode mode;
     int menuSelection;
     int victorySelection;
+    int pauseSelection;
 
     Ball* ball;
+    Paddle* leftPaddle;
+    Paddle* rightPaddle;
 
 public:
     std::function<void(int, int)> ScoreChangeDelegate;
@@ -44,12 +48,17 @@ public:
         mode = GameMode::TwoPlayers;
         menuSelection = 0;
         victorySelection = 0;
+        pauseSelection = 0;
         ball = nullptr;
+        leftPaddle = nullptr;
+        rightPaddle = nullptr;
     }
 
 
     const InputManager* GetInputManager() const;
     FVector2 GetBallPosition() const;
+    float GetPaddleCenterY(bool leftSide) const;
+    float GetPaddleHalfHeight(bool leftSide) const;
 
     virtual void InitGame() override;
     virtual void Update(float DeltaTime) override;
@@ -68,8 +77,10 @@ private:
 
     void UpdateMenu();
     void UpdateVictory();
+    void UpdatePause();
     void DrawMenu();
     void DrawVictory();
+    void DrawPause();
 
     void NotifyGameEnd();
     void NotifyScoreChanged();
