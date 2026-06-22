@@ -64,10 +64,13 @@ void PongGame::ResetMatch()
     P1Points = 0;
     P2Points = 0;
 
-    GameObjects.push_back(std::make_shared<Ball>(this, FVector2{33,33}, 15, RAYWHITE, 350));
-    GameObjects.push_back(std::make_shared<Paddle>(this, FVector2{100, 100}, RAYWHITE, 320, FVector2{30, 120}));
+    leftPaddleStart = FVector2{100, ScreenSize.y * 0.5f};
+    rightPaddleStart = FVector2{ScreenSize.x - 100, ScreenSize.y * 0.5f};
 
-    auto paddleTwo = std::make_shared<Paddle>(this, FVector2{ScreenSize.x - 100, 100}, RAYWHITE, 320, FVector2{30, 120}, 1);
+    GameObjects.push_back(std::make_shared<Ball>(this, FVector2{33,33}, 15, RAYWHITE, 350));
+    GameObjects.push_back(std::make_shared<Paddle>(this, leftPaddleStart, RAYWHITE, 320, FVector2{30, 120}));
+
+    auto paddleTwo = std::make_shared<Paddle>(this, rightPaddleStart, RAYWHITE, 320, FVector2{30, 120}, 1);
     if (mode == GameMode::OnePlayerVsCPU)
     {
         paddleTwo->SetAI(true);
@@ -312,6 +315,16 @@ int PongGame::GetPoints(int playerIndex) const {
     return (playerIndex==0)?P1Points:P2Points;
 }
 
+void PongGame::ResetPaddlePositions()
+{
+    if (leftPaddle) leftPaddle->SetPosition(leftPaddleStart);
+    if (rightPaddle)
+    {
+        rightPaddle->SetPosition(rightPaddleStart);
+        rightPaddle->ResetAIDelay();
+    }
+}
+
 void PongGame::ScorePoints(int playerIndex)
 {
     if(playerIndex == 0){
@@ -321,9 +334,11 @@ void PongGame::ScorePoints(int playerIndex)
         P2Points++;
     }
 
+    ResetPaddlePositions();
+
     NotifyScoreChanged();
 
-    if(P1Points >= winScore || P2Points >= winScore){
+    if(P1Points - P2Points >= winMargin || P2Points - P1Points >= winMargin){
         NotifyGameEnd();
     }
 }

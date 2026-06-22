@@ -24,7 +24,7 @@ class PongGame: public Game
 
     int P1Points;
     int P2Points;
-    const int winScore = 5;
+    const int winMargin = 3;
 
     GameState currentState;
     GameMode mode;
@@ -35,6 +35,8 @@ class PongGame: public Game
     Ball* ball;
     Paddle* leftPaddle;
     Paddle* rightPaddle;
+    FVector2 leftPaddleStart;
+    FVector2 rightPaddleStart;
 
 public:
     std::function<void(int, int)> ScoreChangeDelegate;
@@ -74,6 +76,7 @@ public:
 private:
     void StartMatch();
     void ResetMatch();
+    void ResetPaddlePositions();
 
     void UpdateMenu();
     void UpdateVictory();

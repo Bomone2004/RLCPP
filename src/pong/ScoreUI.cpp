@@ -29,6 +29,24 @@ void ScoreUI::Update(float DeltaTime)
 
 void ScoreUI::Draw()
 {
-    DrawText(std::to_string(scoreLeft).c_str(),position.x -50,position.y,50, RAYWHITE);
-    DrawText(std::to_string(scoreRight).c_str(),position.x +50,position.y,50, RAYWHITE);
+    float centerX = game->GetScreenSize().x * 0.5f;
+
+    int nameSize = 22;
+    int scoreSize = 40;
+    float nameY = 10;
+    float scoreY = 38;
+    float gap = 22;
+
+    const char* playerOne = "PLAYER 1";
+    const char* playerTwo = "PLAYER 2";
+    DrawText(playerOne, centerX - gap - MeasureText(playerOne, nameSize), nameY, nameSize, RAYWHITE);
+    DrawText(playerTwo, centerX + gap, nameY, nameSize, RAYWHITE);
+
+    std::string leftScore = std::to_string(scoreLeft);
+    std::string rightScore = std::to_string(scoreRight);
+
+    const char* dash = "-";
+    DrawText(dash, centerX - MeasureText(dash, scoreSize)/2, scoreY, scoreSize, RAYWHITE);
+    DrawText(leftScore.c_str(), centerX - gap - MeasureText(leftScore.c_str(), scoreSize), scoreY, scoreSize, RAYWHITE);
+    DrawText(rightScore.c_str(), centerX + gap, scoreY, scoreSize, RAYWHITE);
 }

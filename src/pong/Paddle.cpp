@@ -5,6 +5,15 @@
 void Paddle::SetAI(bool enabled)
 {
     aiControlled = enabled;
+    if (enabled)
+    {
+        aiDelayTimer = aiStartDelay;
+    }
+}
+
+void Paddle::ResetAIDelay()
+{
+    aiDelayTimer = aiStartDelay;
 }
 
 void Paddle::Start()
@@ -53,10 +62,16 @@ void Paddle::UpdatePlayer(float deltaTime)
 
 void Paddle::UpdateAI(float deltaTime)
 {
+    velocity = {0, 0};
+
+    if (aiDelayTimer > 0.0f)
+    {
+        aiDelayTimer -= deltaTime;
+        return;
+    }
+
     FVector2 ballPosition = dynamic_cast<PongGame*>(game)->GetBallPosition();
     float deadZone = 10.0f;
-
-    velocity = {0, 0};
 
     if (ballPosition.y < GetPosition().y - deadZone && GetPosition().y - Bounds.y/2 > 0)
     {
