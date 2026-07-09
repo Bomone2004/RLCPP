@@ -16,7 +16,7 @@ The preset uses:
 - `build/default` as the build directory
 - `compile_commands.json` enabled
 
-## Windows 11 + VS Code + Ninja: if `raylib.h` is not found
+## Troubleshooting: `raylib.h` not found on Windows 11 with VS Code and Ninja
 
 If VS Code reports that `raylib.h` does not exist, the problem is usually **not in the repository code**, but in the local CMake configure step.
 
