@@ -9,7 +9,7 @@
     {
       "name": "default",
       "displayName": "Default Ninja",
-      "description": "Configura il progetto con Ninja e genera compile_commands.json",
+      "description": "Configure the project with Ninja and generate compile_commands.json",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/default",
       "cacheVariables": {

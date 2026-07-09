@@ -2,51 +2,51 @@
 
 ## Build
 
-Questo progetto **non richiede una raylib installata a mano**: la dipendenza viene scaricata da CMake tramite `FetchContent` in `CMakeLists.txt`.
+This project does **not require a manually installed raylib**: the dependency is downloaded by CMake through `FetchContent` in `CMakeLists.txt`.
 
-Configurazione consigliata:
+Recommended commands:
 
 ```bash
 cmake --preset default
 cmake --build --preset default
 ```
 
-La preset usa:
-- generatore `Ninja`
-- cartella di build `build/default`
-- `compile_commands.json` abilitato
+The preset uses:
+- `Ninja` as generator
+- `build/default` as the build directory
+- `compile_commands.json` enabled
 
-## Windows 11 + VS Code + Ninja: se `raylib.h` non viene trovata
+## Windows 11 + VS Code + Ninja: if `raylib.h` is not found
 
-Se VS Code segnala che `raylib.h` non esiste, nella maggior parte dei casi il problema **non è nel codice del repository**, ma nella configure CMake locale.
+If VS Code reports that `raylib.h` does not exist, the problem is usually **not in the repository code**, but in the local CMake configure step.
 
 Checklist:
 
-1. Apri in VS Code la root del repository.
-2. Usa l'estensione **CMake Tools**.
-3. Seleziona la preset/configure `default` oppure un kit compatibile con `Ninja`.
-4. Elimina la cache CMake e riconfigura da zero.
-5. Controlla che dopo la configure esistano:
+1. Open the repository root in VS Code.
+2. Use the **CMake Tools** extension.
+3. Select the `default` preset/configure or a kit compatible with `Ninja`.
+4. Clear the CMake cache and reconfigure from scratch.
+5. Check that these directories exist after configure:
    - `build/default/_deps/raylib-src`
    - `build/default/_deps/raylib-build`
-6. Se queste cartelle non esistono, il download/configure di raylib è fallito.
-7. Guarda il log CMake per errori di:
-   - rete
-   - certificati SSL
+6. If those directories do not exist, the raylib download/configure step failed.
+7. Check the CMake log for errors related to:
+   - networking
+   - SSL certificates
    - proxy/firewall
-   - accesso a GitHub
-8. Se raylib viene scaricata ma l'editor continua a non vedere `raylib.h`, rigenera la configure e assicurati che VS Code stia leggendo la build giusta.
+   - GitHub access
+8. If raylib is downloaded but the editor still cannot resolve `raylib.h`, regenerate the configure step and make sure VS Code is reading the correct build directory.
 
-Durante la configure il progetto stampa anche:
+During configure the project also prints:
 - `raylib source dir`
 - `raylib binary dir`
 - `raylib include dirs`
 
-Queste righe servono a capire subito se il target `raylib` è stato creato correttamente.
+These lines help verify immediately whether the `raylib` target was created correctly.
 
-## Nota sull'ambiente Linux
+## Note for Linux environments
 
-Su Linux, la configure di raylib può richiedere dipendenze grafiche di sistema aggiuntive (ad esempio X11). Se mancano, la configure può fallire anche se il repository è corretto.
+On Linux, raylib configure may require additional system graphics dependencies such as X11. If they are missing, configure can fail even when the repository itself is correct.
 
 TODO LIST (Lesson):
 >> Gestione Input (Classe Input Manager) - DONE
