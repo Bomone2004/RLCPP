@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-option(RAYLIBCPP_VERBOSE_FETCHCONTENT "Enable verbose FetchContent output for dependency troubleshooting" OFF)
+option(RAYLIBCPP_VERBOSE_FETCHCONTENT "Enable verbose FetchContent output for raylib troubleshooting" OFF)
 if(RAYLIBCPP_VERBOSE_FETCHCONTENT)
     set(FETCHCONTENT_QUIET OFF)
 else()
