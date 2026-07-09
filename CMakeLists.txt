@@ -3,9 +3,11 @@ project(RaylibCPP)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+set(FETCHCONTENT_QUIET OFF)
 include(FetchContent)
 FetchContent_Declare(
     raylib
@@ -17,6 +19,13 @@ set(BUILD_GAMES OFF CACHE BOOL "Build Games" FORCE)
 set(OPENGL_VERSION "4.3" CACHE STRING "OpenGL version" FORCE)
  
 FetchContent_MakeAvailable(raylib)
+
+if(TARGET raylib)
+    get_target_property(RAYLIB_INCLUDE_DIRS raylib INTERFACE_INCLUDE_DIRECTORIES)
+    message(STATUS "raylib source dir: ${raylib_SOURCE_DIR}")
+    message(STATUS "raylib binary dir: ${raylib_BINARY_DIR}")
+    message(STATUS "raylib include dirs: ${RAYLIB_INCLUDE_DIRS}")
+endif()
 
 add_executable(${PROJECT_NAME} 
 src/main.cpp 

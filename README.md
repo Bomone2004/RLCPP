@@ -1,5 +1,54 @@
 # RLCPP
 
+## Build
+
+Questo progetto **non richiede una raylib installata a mano**: la dipendenza viene scaricata da CMake tramite `FetchContent` in `/home/runner/work/RLCPP/RLCPP/CMakeLists.txt`.
+
+Configurazione consigliata:
+
+```bash
+cmake --preset default
+cmake --build --preset default
+```
+
+La preset usa:
+- generatore `Ninja`
+- cartella di build `build/default`
+- `compile_commands.json` abilitato
+
+## Windows 11 + VS Code + Ninja: se `raylib.h` non viene trovata
+
+Se VS Code segnala che `raylib.h` non esiste, nella maggior parte dei casi il problema **non è nel codice del repository**, ma nella configure CMake locale.
+
+Checklist:
+
+1. Apri in VS Code la root del repository:
+   - `/home/runner/work/RLCPP/RLCPP`
+2. Usa l'estensione **CMake Tools**.
+3. Seleziona la preset/configure `default` oppure un kit compatibile con `Ninja`.
+4. Elimina la cache CMake e riconfigura da zero.
+5. Controlla che dopo la configure esistano:
+   - `build/default/_deps/raylib-src`
+   - `build/default/_deps/raylib-build`
+6. Se queste cartelle non esistono, il download/configure di raylib è fallito.
+7. Guarda il log CMake per errori di:
+   - rete
+   - certificati SSL
+   - proxy/firewall
+   - accesso a GitHub
+8. Se raylib viene scaricata ma l'editor continua a non vedere `raylib.h`, rigenera la configure e assicurati che VS Code stia leggendo la build giusta.
+
+Durante la configure il progetto stampa anche:
+- `raylib source dir`
+- `raylib binary dir`
+- `raylib include dirs`
+
+Queste righe servono a capire subito se il target `raylib` è stato creato correttamente.
+
+## Nota sull'ambiente Linux
+
+Su Linux, la configure di raylib può richiedere dipendenze grafiche di sistema aggiuntive (ad esempio X11). Se mancano, la configure può fallire anche se il repository è corretto.
+
 TODO LIST (Lesson):
 >> Gestione Input (Classe Input Manager) - DONE
 >> Gestire Collisioni (AxisAlignedBoundingBox)
