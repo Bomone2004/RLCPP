@@ -48,7 +48,7 @@ These lines help verify immediately whether the `raylib` target was created corr
 
 ## Note for Linux environments
 
-On Linux, raylib configure may require additional system graphics dependencies such as X11, Wayland, ALSA, or Mesa. If they are missing, configure can fail even when the repository itself is correct.
+On Linux, raylib configuration may require additional system graphics dependencies such as X11, Wayland, ALSA, or Mesa. If they are missing, configure can fail even when the repository itself is correct.
 
 TODO LIST (Lesson):
 >> Gestione Input (Classe Input Manager) - DONE
