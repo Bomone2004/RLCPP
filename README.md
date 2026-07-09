@@ -2,7 +2,7 @@
 
 ## Build
 
-Questo progetto **non richiede una raylib installata a mano**: la dipendenza viene scaricata da CMake tramite `FetchContent` in `/home/runner/work/RLCPP/RLCPP/CMakeLists.txt`.
+Questo progetto **non richiede una raylib installata a mano**: la dipendenza viene scaricata da CMake tramite `FetchContent` in `CMakeLists.txt`.
 
 Configurazione consigliata:
 
@@ -22,8 +22,7 @@ Se VS Code segnala che `raylib.h` non esiste, nella maggior parte dei casi il pr
 
 Checklist:
 
-1. Apri in VS Code la root del repository:
-   - `/home/runner/work/RLCPP/RLCPP`
+1. Apri in VS Code la root del repository.
 2. Usa l'estensione **CMake Tools**.
 3. Seleziona la preset/configure `default` oppure un kit compatibile con `Ninja`.
 4. Elimina la cache CMake e riconfigura da zero.
