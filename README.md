@@ -36,6 +36,7 @@ Checklist:
    - proxy/firewall
    - GitHub access
 8. If raylib is downloaded but the editor still cannot resolve `raylib.h`, delete the build directory or clear the CMake cache, run CMake configure again, and make sure VS Code is reading the correct build directory.
+9. In VS Code, verify that CMake Tools is using the expected build directory from the status bar or command palette. For this repository, the default preset should point to `build/default`.
 
 During configure the project also prints:
 - `raylib source dir`
