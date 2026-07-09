@@ -24,7 +24,7 @@ Checklist:
 
 1. Open the repository root in VS Code.
 2. Use the **CMake Tools** extension.
-3. Select the `default` preset for configuration, or choose a kit compatible with `Ninja`.
+3. Select the `default` preset for configuration, or choose a compiler kit in CMake Tools that can build with `Ninja`.
 4. Clear the CMake cache and reconfigure from scratch.
 5. Check that these directories exist after configure:
    - `build/default/_deps/raylib-src`
@@ -35,8 +35,9 @@ Checklist:
    - SSL certificates
    - proxy/firewall
    - GitHub access
-8. If raylib is downloaded but the editor still cannot resolve `raylib.h`, delete the build directory or clear the CMake cache, run CMake configure again, and make sure VS Code is reading the correct build directory.
-9. In VS Code, verify that CMake Tools is using the expected build directory from the status bar or command palette. For this repository, the default preset should point to `build/default`.
+8. If raylib is downloaded but the editor still cannot resolve `raylib.h`, delete the build directory or clear the CMake cache.
+9. Run CMake configure again.
+10. In VS Code, verify from the CMake Tools status bar or command palette that the active build directory is `build/default`.
 
 During configure the project also prints:
 - `raylib source dir`
