@@ -17,7 +17,8 @@
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
         "BUILD_EXAMPLES": "OFF",
         "BUILD_GAMES": "OFF",
-        "OPENGL_VERSION": "4.3"
+        "OPENGL_VERSION": "4.3",
+        "RAYLIBCPP_VERBOSE_FETCHCONTENT": "ON"
       }
     }
   ],
